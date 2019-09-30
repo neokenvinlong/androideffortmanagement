@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_pj"
+        android:title="Project"/>
+    <item
+        android:id="@+id/nav_task"
+        android:title="Task"/>
+    <item
+        android:id="@+id/nav_emmp"
+        android:title="Employee"/>
+    <item
+        android:id="@+id/sta"
+        android:title="Statistic"/>
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Log out"/>
+</menu>
