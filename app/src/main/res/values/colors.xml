@@ -3,6 +3,9 @@
 <!--    <color name="colorPrimary">#A569BD</color>-->
 <!--    <color name="colorPrimaryDark">#00574B</color>-->
 <!--    <color name="colorAccent">#D81B60</color>-->
+
+    <color name="projectBackground">#6FB8C9</color>
+
     <color name="colorHint">#FFFFFF</color>
     <color name="colorEditTextLogin">#028C6A</color>
     <color name="colorPrimary">#D81B60</color>
