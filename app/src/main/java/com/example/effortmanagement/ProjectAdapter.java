@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
     public class ProjectViewHolder extends RecyclerView.ViewHolder{
 
         TextView projectName, projectStatus, totalTask;
+        RelativeLayout viewItemProjectBackground, viewItemProjectForeground;
 
         public ProjectViewHolder(@NonNull View itemView){
             super(itemView);
