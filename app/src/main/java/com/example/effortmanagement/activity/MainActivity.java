@@ -20,30 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bot);
-
-        //control the item of the BottomNavigationView
         setUpNavigation();
     }
-
-//    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-//            new BottomNavigationView.OnNavigationItemSelectedListener() {
-//                @Override
-//                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                    Fragment selectedFragment = null;
-//
-//                    switch (menuItem.getItemId()) {
-//                        case R.id.nav_emp:
-//                            selectedFragment = new EmployeeListFragment();
-//                            break;
-//                        case R.id.nav_project:
-//                            selectedFragment = new ProjectListFragment();
-//                            break;
-//                    }
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.project_list_fragment, selectedFragment).commit();
-//                    return true;
-//                }
-//            };
 
     public void setUpNavigation() {
         bottomNavigationView = findViewById(R.id.nav_bot);
