@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_project"
-            android:icon="@drawable/baseline_event_note_white_18dp"
-            android:title="Project"/>
-        <item
-            android:id="@+id/nav_task"
-            android:icon="@drawable/baseline_developer_board_white_18dp"
-            android:title="Task"/>
-        <item
-            android:id="@+id/nav_emp"
-            android:icon="@drawable/baseline_people_white_18dp"
-            android:title="Employee"/>
-        <item
-            android:id="@+id/sta"
-            android:icon="@drawable/baseline_poll_white_18dp"
-            android:title="Statistic"/>
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/icon_exit_18"
-            android:title="Log out"/>
-    </group>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_project"
+        android:icon="@drawable/baseline_event_note_white_18dp"
+        android:orderInCategory="1"
+        android:title="Project"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nav_task"
+        android:icon="@drawable/baseline_developer_board_white_18dp"
+        android:orderInCategory="2"
+        android:title="Task"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nav_emp"
+        android:icon="@drawable/baseline_people_white_18dp"
+        android:orderInCategory="3"
+        android:title="Employee"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/sta"
+        android:icon="@drawable/baseline_poll_white_18dp"
+        android:orderInCategory="4"
+        android:title="Statistic"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/icon_exit_18"
+        android:orderInCategory="5"
+        android:title="Log out"
+        app:showAsAction="always" />
+
 
 </menu>

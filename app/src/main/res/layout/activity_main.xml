@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".MainActivity"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/bg"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity"
+    android:background="@drawable/bg">
 
     <fragment
-        android:id="@+id/project_list_fragment"
-        android:name="com.example.effortmanagement.ProjectListFragment"
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/nav_bot"
-        android:layout_alignTop="@id/nav_bot" />
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bot"
@@ -24,8 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation_menu"
-        android:layout_alignParentBottom="true"
-        android:clipToPadding="false" />
+        app:menu="@menu/navigation_menu" />
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

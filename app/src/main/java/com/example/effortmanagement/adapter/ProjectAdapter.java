@@ -1,4 +1,4 @@
-package com.example.effortmanagement;
+package com.example.effortmanagement.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.effortmanagement.dto.ProjectItem;
+import com.example.effortmanagement.R;
 
 import java.util.ArrayList;
 import java.util.List;

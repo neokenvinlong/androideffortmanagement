@@ -1,4 +1,4 @@
-package com.example.effortmanagement;
+package com.example.effortmanagement.dto;
 
 public class ProjectItem {
     String projectName,projectStatus;

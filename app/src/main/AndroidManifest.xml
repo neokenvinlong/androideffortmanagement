@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.effortmanagement">
+
+    <dist:module dist:instant="true" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/MenuTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -19,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustNothing">
 
         </activity>
