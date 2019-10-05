@@ -1,6 +1,5 @@
-package com.example.effortmanagement;
+package com.example.effortmanagement.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.effortmanagement.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ import java.util.List;
 public class ProjectListFragment extends Fragment {
 
     RecyclerView projectRecyclerView;
+    LinearLayout projectRecyclerViewLayout;
     ProjectAdapter projectAdapter;
     List<ProjectItem> mData;
     SearchView searchView;
@@ -73,6 +76,7 @@ public class ProjectListFragment extends Fragment {
 
         //adapter ini and setup
         projectRecyclerView = view.findViewById(R.id.recycler_view);
+        projectRecyclerViewLayout = view.findViewById(R.id.projectRecyclerViewLayout);
         //projectRecyclerView.setHasFixedSize(true);
 
         projectAdapter = new ProjectAdapter(getActivity(), mData);
@@ -122,5 +126,4 @@ public class ProjectListFragment extends Fragment {
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
-
 }

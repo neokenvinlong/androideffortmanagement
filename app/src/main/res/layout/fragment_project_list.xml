@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/projectRecyclerViewLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProjectListFragment"
+    android:background="@drawable/bg"
     android:orientation="vertical"
-    android:background="@drawable/bg">
+    tools:context=".fragment.ProjectListFragment">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -20,8 +21,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="675dp"
-        android:background="@drawable/bg"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/bg" />
 
 
 </LinearLayout>
