@@ -57,4 +57,6 @@ dependencies {
     // For example, add call adapter for RxJava 2
 //    compile 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
 
+    //anychart
+    implementation 'com.github.AnyChart:AnyChart-Android:0.0.3'
 }

@@ -8,12 +8,15 @@
     android:orientation="vertical"
     tools:context=".fragment.ProjectListFragment">
 
-
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="static"
+        android:layout_height="wrap_content"
+        android:text="Statistic"
         android:gravity="center"/>
 
-
+    <com.anychart.anychart.AnyChartView
+        android:id="@+id/any_chart_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg" />
 </LinearLayout>

@@ -1,7 +1,7 @@
 package com.example.effortmanagement.networking.API;
 
-import com.example.effortmanagement.model.dto.LoginAccountDTO;
 import com.example.effortmanagement.model.Token;
+import com.example.effortmanagement.model.dto.LoginAccountDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -11,6 +11,7 @@ public interface AccountService {
 
     @POST("authenticate")
     Call<Token> login(@Body LoginAccountDTO dto);
+
 
 
 
