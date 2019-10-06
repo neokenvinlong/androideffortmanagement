@@ -15,9 +15,6 @@ public class Account {
     @SerializedName("token")
     private String tokens;
 
-    public Account() {
-    }
-
     public Account(String name, String password, String role) {
         this.name = name;
         this.password = password;

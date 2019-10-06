@@ -1,6 +1,17 @@
 package com.example.effortmanagement.presenter;
 
+import android.widget.Toast;
+
 import com.example.effortmanagement.contract.AccountContract;
+import com.example.effortmanagement.model.Token;
+import com.example.effortmanagement.model.dto.LoginAccountDTO;
+import com.example.effortmanagement.networking.API.AccountService;
+import com.example.effortmanagement.networking.NetworkingUtils;
+import com.example.effortmanagement.view.LoginActivity;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AccountPresenter implements AccountContract.Presenter {
     private AccountContract.View mView;
@@ -9,13 +20,32 @@ public class AccountPresenter implements AccountContract.Presenter {
         this.mView = mView;
     }
 
-    public AccountPresenter() {
+    AccountService accountService = NetworkingUtils.getUserApiInstance();
 
-    }
 
     @Override
-    public void start() {
-        mView.init();
+    public void doLogin(String name, String password) {
+        LoginAccountDTO dto = new LoginAccountDTO();
+        dto.setPassword(password);
+        dto.setUsername(name);
+
+        Call<Token> call = accountService.login(dto);
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if (response.isSuccessful()) {
+                    mView.loginSuccess(response.body().getTokens());
+
+                }else{
+                    mView.loginFailure("Login failure");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                mView.loginFailure("Login failure");
+            }
+        });
     }
 
 //    @Override

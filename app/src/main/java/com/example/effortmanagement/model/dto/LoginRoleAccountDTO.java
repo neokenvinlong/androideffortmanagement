@@ -9,9 +9,6 @@ public class LoginRoleAccountDTO {
     @SerializedName("role")
     private String role;
 
-    public LoginRoleAccountDTO() {
-    }
-
     public LoginRoleAccountDTO(String name, String role) {
         this.name = name;
         this.role = role;

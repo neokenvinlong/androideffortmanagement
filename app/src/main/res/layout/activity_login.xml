@@ -73,6 +73,7 @@
             android:background="@drawable/btn_signin_state"
             android:text="SIGN IN"
             android:textColor="#FE5295"
+            android:onClick="clickLogIn"
             android:textSize="17sp"/>
 
     </LinearLayout>
