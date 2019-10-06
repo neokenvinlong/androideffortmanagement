@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">Nhom Thanh</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Account name</string>
     <string name="prompt_password">Password</string>

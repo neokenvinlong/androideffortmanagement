@@ -1,7 +1,11 @@
 package com.example.effortmanagement.model.dto;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LoginAccountDTO {
+    @SerializedName("username")
         private String username;
+    @SerializedName("password")
         private String password;
         public LoginAccountDTO() {}
 
