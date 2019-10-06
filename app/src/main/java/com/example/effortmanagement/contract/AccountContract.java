@@ -4,9 +4,12 @@ public interface AccountContract {
     interface View{
         void init();
 
-        void doLogin(String name, String password);
+        String doLogin(String name, String password);
 
         boolean checkLogin(String name, String password);
+
+        void getRoleAccount(String name);
+
     }
 
     interface Presenter{

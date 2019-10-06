@@ -1,4 +1,4 @@
-package com.example.effortmanagement;
+package com.example.effortmanagement.fragment;
 
 public class ProjectItem {
     String projectName,projectStatus;

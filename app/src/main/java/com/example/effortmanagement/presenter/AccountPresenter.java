@@ -5,8 +5,12 @@ import com.example.effortmanagement.contract.AccountContract;
 public class AccountPresenter implements AccountContract.Presenter {
     private AccountContract.View mView;
 
-    public AccountPresenter(AccountContract.View mView) {
+    public void setmView(AccountContract.View mView) {
         this.mView = mView;
+    }
+
+    public AccountPresenter() {
+
     }
 
     @Override
