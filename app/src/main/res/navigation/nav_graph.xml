@@ -3,39 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_project">
-    <fragment
-        android:id="@+id/nav_project"
-        android:name="com.example.effortmanagement.fragment.ProjectListFragment"
-        android:label="fragment_project_list"
-        tools:layout="@layout/fragment_project_list">
-        <action
-            android:id="@+id/action_project_list_to_task"
-            app:destination="@id/nav_task" />
-    </fragment>
+    app:startDestination="@id/nav_task">
     <fragment
         android:id="@+id/nav_task"
         android:name="com.example.effortmanagement.fragment.TaskListFragment"
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_task_list">
         <action
-            android:id="@+id/action_task_list_to_emp"
-            app:destination="@id/nav_emp" />
+            android:id="@+id/action_task_list_to_static"
+            app:destination="@id/nav_static" />
     </fragment>
     <fragment
-        android:id="@+id/nav_emp"
-        android:name="com.example.effortmanagement.fragment.EmployeeListFragment"
-        android:label="fragment_employee_list"
-        tools:layout="@layout/fragment_employee_list">
-        <action
-            android:id="@+id/action_employee_list_to_sta"
-            app:destination="@id/sta" />
-    </fragment>
-    <fragment
-        android:id="@+id/sta"
+        android:id="@+id/nav_static"
         android:name="com.example.effortmanagement.fragment.StatisticFragment"
         android:label="fragment_statistic"
         tools:layout="@layout/fragment_statistic">
+        <action
+            android:id="@+id/action_static_list_to_settings"
+            app:destination="@+id/nav_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.effortmanagement.fragment.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+
     </fragment>
 
 </navigation>

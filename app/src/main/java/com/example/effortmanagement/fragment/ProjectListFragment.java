@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.effortmanagement.R;
+import com.example.effortmanagement.adapter.ProjectAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

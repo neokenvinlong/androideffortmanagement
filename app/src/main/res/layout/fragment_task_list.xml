@@ -4,16 +4,21 @@
     android:id="@+id/projectRecyclerViewLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
     android:orientation="vertical"
     tools:context=".fragment.ProjectListFragment">
 
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ExpandableListView
+        android:id="@+id/lvExp"
         android:layout_height="match_parent"
-        android:text="task"
-        android:gravity="center"/>
+        android:layout_width="match_parent"/>
 
 
 </LinearLayout>
