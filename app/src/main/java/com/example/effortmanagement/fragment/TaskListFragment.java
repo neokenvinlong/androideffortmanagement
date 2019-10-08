@@ -43,8 +43,8 @@ public class TaskListFragment extends Fragment {
 
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
-    private List<String> listDataHeader;
-    private HashMap<String, List<String>> listDataChild;
+    private List<ProjectItem> listDataHeader;
+    private List<List<String>> listDataChild;
     private Button btnAddTask;
 
 
@@ -128,7 +128,7 @@ public class TaskListFragment extends Fragment {
                         listDataHeader.get(groupPosition)
                                 + " : "
                                 + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
+                                groupPosition).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
                 return false;
@@ -146,13 +146,16 @@ public class TaskListFragment extends Fragment {
      * Preparing the list data
      */
     private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        listDataHeader = new ArrayList<ProjectItem>();
+        listDataChild = new ArrayList<List<String>>();
 
-        // Adding child data
-        listDataHeader.add("Project 1");
-        listDataHeader.add("Project 2");
-        listDataHeader.add("Project 3");
+        ProjectItem projectItem = new ProjectItem("aaa","aaa",5);
+        ProjectItem projectItem1 = new ProjectItem("bbb","bbb",5);
+        ProjectItem projectItem2 = new ProjectItem("ccc","ccc",5);
+        listDataHeader.add(projectItem);
+        listDataHeader.add(projectItem1);
+        listDataHeader.add(projectItem2);
+
 
         // Adding child data
         List<String> project1 = new ArrayList<String>();
@@ -166,22 +169,23 @@ public class TaskListFragment extends Fragment {
         List<String> project2 = new ArrayList<String>();
         project2.add("Task 2 1");
         project2.add("Task 2 2");
-        project2.add("Task 2 3");
-        project2.add("Task 2 3");
-        project2.add("Task 2 4");
-        project2.add("Task 2 5");
+
 
         List<String> project3 = new ArrayList<String>();
         project3.add("Task 3 1");
         project3.add("Task 3 2");
         project3.add("Task 3 3");
-        project3.add("Task 3 4");
-        project3.add("Task 3 5");
-        project3.add("Task 3 6");
 
-        listDataChild.put(listDataHeader.get(0), project1); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), project2);
-        listDataChild.put(listDataHeader.get(2), project3);
+        // Adding child data
+        listDataChild.add(project1);
+        listDataChild.add(project2);
+        listDataChild.add(project3);
+
+        System.out.println("TEST: " + listDataChild.size());
+
+//        listDataChild.put(listDataHeader.get(0).getProjectName(), project1); // Header, Child data
+//        listDataChild.put(listDataHeader.get(1).getProjectName(), project2);
+//        listDataChild.put(listDataHeader.get(2).getProjectName(), project3);
     }
 
 

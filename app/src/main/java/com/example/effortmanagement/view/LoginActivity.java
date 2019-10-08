@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.effortmanagement.R;
 import com.example.effortmanagement.contract.AccountContract;
 import com.example.effortmanagement.contract.RoleContract;
+import com.example.effortmanagement.fragment.SettingsFragment;
 import com.example.effortmanagement.presenter.AccountPresenter;
 import com.example.effortmanagement.presenter.RolePresenter;
 
@@ -21,8 +22,9 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
     AccountPresenter accountPresenter;
     RolePresenter rolePresenter;
 
-    private static String roleT;
-    private static String tokenT;
+    private String roleT;
+    private String tokenT;
+    private String nameT;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,22 +58,24 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
     }
 
     @Override
-    public void loginFailure(String mesage) {
+    public void loginFailure(String message) {
         Toast.makeText(this, "Login Failure!!!", Toast.LENGTH_SHORT).show();
     }
 
     private boolean checkLogin(String name, String password) {
+        boolean isValid = true;
         if (name.equals("")) {
-            edtUsername.setError("Enter username");
-            return false;
-        } else if (password.equals("")) {
-            edtPassword.setError("Enter password");
-            return false;
-        } else if (!password.equals("") && password.length() < 6) {
-            edtPassword.setError("Enter password >5 characters");
-            return false;
+            edtUsername.setError("Username is required !");
+            isValid = false;
         }
-        return true;
+        if (password.equals("")) {
+            edtPassword.setError("Password is required !");
+            isValid = false;
+        } else if(password.length() < 6){
+            edtPassword.setError("Enter password >5 characters");
+            isValid = false;
+        }
+        return isValid;
     }
 
     @Override
@@ -81,7 +85,10 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
         switch (role) {
             case "ROLE_PM":
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("account",nameT);
+                intent.putExtra("token",tokenT);
                 startActivity(intent);
+
                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                 break;
             case "ROLE_EMPLOYEE":
@@ -100,18 +107,18 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
     }
 
     public void clickLogIn(View view) {
-        String username = edtUsername.getText().toString();
+        nameT = edtUsername.getText().toString();
         String password = edtPassword.getText().toString();
         //validate
-        if (checkLogin(username, password)) {
+        if (checkLogin(nameT, password)) {
             try {
-                accountPresenter.doLogin(username, password);
+                accountPresenter.doLogin(nameT, password);
 //                rolePresenter.getAccountRole(username, this.roleT);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
     }
-    }
+}
 
