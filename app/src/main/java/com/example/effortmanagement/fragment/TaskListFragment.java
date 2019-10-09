@@ -1,6 +1,7 @@
 package com.example.effortmanagement.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,12 @@ import android.widget.Toast;
 import com.example.effortmanagement.R;
 import com.example.effortmanagement.adapter.ExpandableListAdapter;
 import com.example.effortmanagement.adapter.ProjectAdapter;
+import com.example.effortmanagement.contract.AccountInfoContract;
+import com.example.effortmanagement.contract.ProjectInfoContract;
+import com.example.effortmanagement.model.dto.AccountInfoDTO;
+import com.example.effortmanagement.model.dto.ProjectByPMDTO;
+import com.example.effortmanagement.presenter.AccountInfoPresenter;
+import com.example.effortmanagement.presenter.ProjectInfoPresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,22 +39,27 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaskListFragment extends Fragment {
+public class TaskListFragment extends Fragment implements ProjectInfoContract.View, AccountInfoContract.View {
 
-   // ///////////////
+    /////////////////
     SearchView searchView;
-    ProjectAdapter projectAdapter;
-    List<ProjectItem> mData;
+    //ProjectAdapter projectAdapter;
+//    List<ProjectItem> mData;
     SearchView.OnQueryTextListener onQueryTextListener;
     ////////////////////////////////
 
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
-    private List<ProjectItem> listDataHeader;
-    private List<List<String>> listDataChild;
+    private List<ProjectByPMDTO> listDataHeader;
+    //private List<List<String>> listDataChild;
     private Button btnAddTask;
 
-
+    private ProjectInfoPresenter projectInfoPresenter;
+    private AccountInfoPresenter accountInfoPresenter;
+    private int projectID;
+    private String token;
+    private AccountInfoDTO accountInfoDTO;
+    private String accountName;
 
     public TaskListFragment() {
         // Required empty public constructor
@@ -63,101 +75,25 @@ public class TaskListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_task_list, container, false);
+        init();
+        token = this.getActivity().getIntent().getStringExtra("token");
+        accountName = this.getActivity().getIntent().getStringExtra("account");
 
-        // get the listview
-        expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
-
-        // get the button add task
+        expListView = view.findViewById(R.id.expandableListView);
         btnAddTask = view.findViewById(R.id.btnAddTask);
 
         // preparing list data
-        prepareListData();
-
-        listAdapter = new ExpandableListAdapter(requireContext(), listDataHeader, listDataChild);
-
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
-
-        // Listview Group click listener
-        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                // Toast.makeText(getApplicationContext(),
-                // "Group Clicked " + listDataHeader.get(groupPosition),
-                // Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-        // Listview Group expanded listener
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Listview Group collasped listener
-        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        // Listview on child click listener
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
-                Toast.makeText(
-                        getContext(),
-                        listDataHeader.get(groupPosition)
-                                + " : "
-                                + listDataChild.get(
-                                groupPosition).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
-                return false;
-            }
-        });
-
+        accountInfoPresenter.getAccountInfo(accountName,token);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         return view;
     }
+    private List<List<String>> addListChild(){
 
-    /*
-     * Preparing the list data
-     */
-    private void prepareListData() {
-        listDataHeader = new ArrayList<ProjectItem>();
-        listDataChild = new ArrayList<List<String>>();
-
-        ProjectItem projectItem = new ProjectItem("aaa","aaa",5);
-        ProjectItem projectItem1 = new ProjectItem("bbb","bbb",5);
-        ProjectItem projectItem2 = new ProjectItem("ccc","ccc",5);
-        listDataHeader.add(projectItem);
-        listDataHeader.add(projectItem1);
-        listDataHeader.add(projectItem2);
-
-
-        // Adding child data
+        List<List<String>> listDataChild = new ArrayList<>();
         List<String> project1 = new ArrayList<String>();
         project1.add("Task 1 1");
         project1.add("Task 1 2");
@@ -181,18 +117,72 @@ public class TaskListFragment extends Fragment {
         listDataChild.add(project2);
         listDataChild.add(project3);
 
-        System.out.println("TEST: " + listDataChild.size());
+        return listDataChild;
+    }
+    /*
+     * Preparing the list data
+     */
+    private void prepareListData(final List<ProjectByPMDTO> listDataHeader,final List<List<String>> listDataChild) {
+        listAdapter = new ExpandableListAdapter(requireContext(), listDataHeader, listDataChild);
+        expListView.setAdapter(listAdapter);
+        // Listview Group click listener
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
-//        listDataChild.put(listDataHeader.get(0).getProjectName(), project1); // Header, Child data
-//        listDataChild.put(listDataHeader.get(1).getProjectName(), project2);
-//        listDataChild.put(listDataHeader.get(2).getProjectName(), project3);
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                // Toast.makeText(getApplicationContext(),
+                // "Group Clicked " + listDataHeader.get(groupPosition),
+                // Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        // Listview Group expanded listener
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getContext(),
+                        listDataHeader.get(groupPosition) + " Expanded",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        // Listview Group collasped listener
+        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getContext(),
+                        listDataHeader.get(groupPosition) + " Collapsed",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        // Listview on child click listener
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                // TODO Auto-generated method stub
+                Toast.makeText(
+                        getContext(),
+                        listDataHeader.get(groupPosition).getProjectName()
+                                + " : "
+                                + listDataChild.get(
+                                groupPosition).get(
+                                childPosition), Toast.LENGTH_SHORT)
+                        .show();
+                return false;
+            }
+        });
     }
 
 
     //////////////////////////////////////////////
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        //getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        /*//getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         inflater.inflate(R.menu.toolbar_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         //SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
@@ -226,6 +216,38 @@ public class TaskListFragment extends Fragment {
             };
             searchView.setOnQueryTextListener(onQueryTextListener);
         }
-        super.onCreateOptionsMenu(menu, inflater);
+        super.onCreateOptionsMenu(menu, inflater);*/
+    }
+
+
+    private void init() {
+        projectInfoPresenter = new ProjectInfoPresenter();
+        projectInfoPresenter.setmView(this);
+
+        accountInfoPresenter = new AccountInfoPresenter();
+        accountInfoPresenter.setmView(this);
+
+    }
+
+    @Override
+    public void getProjectInfoSuccess(List<ProjectByPMDTO> projectByPMDTOList) {
+        prepareListData(projectByPMDTOList, addListChild());
+    }
+
+    @Override
+    public void getProjectInfoFailure(String message) {
+
+    }
+
+    @Override
+    public void getAccountInfoSuccess(AccountInfoDTO accountInfoDTO) {
+        projectID = accountInfoDTO.getId();
+        System.out.println("id la"+projectID);
+        this.projectInfoPresenter.getProjectInfo(projectID,token);
+    }
+
+    @Override
+    public void getAccountInfoFailure(String message) {
+
     }
 }

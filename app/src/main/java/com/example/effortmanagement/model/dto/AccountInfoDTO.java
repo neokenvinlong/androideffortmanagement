@@ -2,9 +2,11 @@ package com.example.effortmanagement.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AccountInfoDTO {
+import java.io.Serializable;
+
+public class AccountInfoDTO implements Serializable {
     @SerializedName("id")
-    private String id;
+    private int id;
 
     @SerializedName("accountName")
     private LoginRoleAccountDTO accountName;
@@ -24,7 +26,7 @@ public class AccountInfoDTO {
     public AccountInfoDTO() {
     }
 
-    public AccountInfoDTO(String id, LoginRoleAccountDTO accountName, String email, String name, String phone, String skill) {
+    public AccountInfoDTO(int id, LoginRoleAccountDTO accountName, String email, String name, String phone, String skill) {
         this.id = id;
         this.accountName = accountName;
         this.email = email;
@@ -33,11 +35,11 @@ public class AccountInfoDTO {
         this.skill = skill;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

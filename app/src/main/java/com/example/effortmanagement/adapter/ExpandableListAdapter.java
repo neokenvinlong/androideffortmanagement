@@ -11,18 +11,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.effortmanagement.R;
-import com.example.effortmanagement.fragment.ProjectItem;
+import com.example.effortmanagement.model.dto.ProjectByPMDTO;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<ProjectItem> listDataHeader; // header titles
+    private List<ProjectByPMDTO> listDataHeader; // header titles
     // child data in format of header title, child title
     private List<List<String>> _listDataChild;
 
-    public ExpandableListAdapter(Context context, List<ProjectItem> listDataHeader, List<List<String>> _listDataChild) {
+    public ExpandableListAdapter(Context context, List<ProjectByPMDTO> listDataHeader, List<List<String>> _listDataChild) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this._listDataChild = _listDataChild;
@@ -36,27 +36,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return groupPosition;
+        return childPosition;
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_view_items, null);
         }
-        ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<>(
-                        convertView.getContext(),
-                        android.R.layout.simple_list_item_1,
-                        (List<String>) getChild(groupPosition, childPosition)
-                );
-        ListView listViewItem = convertView.findViewById(R.id.lvItem);
-        listViewItem.setAdapter(arrayAdapter);
+
+
+        TextView listViewItem = convertView.findViewById(R.id.lvItem);
+        ArrayList<String> item = (ArrayList) getChild(groupPosition,childPosition);
+        listViewItem.setText(item.get(childPosition));
 
         return convertView;
     }
@@ -84,7 +80,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        ProjectItem headerTitle = (ProjectItem) getGroup(groupPosition);
+        ProjectByPMDTO headerTitle = (ProjectByPMDTO) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
