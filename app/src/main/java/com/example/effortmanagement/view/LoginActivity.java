@@ -11,21 +11,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.effortmanagement.R;
 import com.example.effortmanagement.contract.AccountContract;
+import com.example.effortmanagement.contract.AccountInfoContract;
 import com.example.effortmanagement.contract.RoleContract;
 import com.example.effortmanagement.fragment.SettingsFragment;
+import com.example.effortmanagement.model.dto.AccountInfoDTO;
+import com.example.effortmanagement.presenter.AccountInfoPresenter;
 import com.example.effortmanagement.presenter.AccountPresenter;
 import com.example.effortmanagement.presenter.RolePresenter;
 
-public class LoginActivity extends AppCompatActivity implements AccountContract.View, RoleContract.View {
-    EditText edtUsername, edtPassword;
-    Button btnLogin;
-    AccountPresenter accountPresenter;
-    RolePresenter rolePresenter;
+public class LoginActivity extends AppCompatActivity implements AccountContract.View, RoleContract.View{
+    private EditText edtUsername, edtPassword;
+    private Button btnLogin;
+
+    private AccountPresenter accountPresenter;
+    private RolePresenter rolePresenter;
 
     private String roleT;
     private String tokenT;
     private String nameT;
-
+    private AccountInfoDTO accountInfo;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +40,6 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
-
     }
 
     private void init() {
@@ -46,13 +49,10 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
 
         rolePresenter = new RolePresenter();
         rolePresenter.setView(this);
-
     }
 
     @Override
     public void loginSuccess(String token) {
-//        System.out.println("Token:" + token);
-//        this.roleT = token;
         tokenT = token;
         this.rolePresenter.getAccountRole(this.edtUsername.getText().toString(), token);
     }
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
 
     @Override
     public void getAccountRoleSuccess(String role) {
-        System.out.println("Role name: " + role);
+        //System.out.println("Role name: " + role);
         roleT = role;
         switch (role) {
             case "ROLE_PM":
@@ -93,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
                 break;
             case "ROLE_EMPLOYEE":
                 Intent intent1 = new Intent(getApplicationContext(), EmployeeActivity.class);
+                intent1.putExtra("account",nameT);
+                intent1.putExtra("token",tokenT);
                 startActivity(intent1);
                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                 break;
