@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <TextView
@@ -20,6 +20,11 @@
             android:textColor="#f9f93d"
             android:textSize="20dp"
             tools:ignore="RtlHardcoded,RtlSymmetry,SpUsage" />
+        <TextView
+            android:id="@+id/lblId"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/btnAddTask"
