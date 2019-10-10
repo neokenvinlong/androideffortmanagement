@@ -26,10 +26,13 @@ import com.example.effortmanagement.adapter.ExpandableListAdapter;
 import com.example.effortmanagement.adapter.ProjectAdapter;
 import com.example.effortmanagement.contract.AccountInfoContract;
 import com.example.effortmanagement.contract.ProjectInfoContract;
+import com.example.effortmanagement.contract.TaskContract;
+import com.example.effortmanagement.model.Task;
 import com.example.effortmanagement.model.dto.AccountInfoDTO;
 import com.example.effortmanagement.model.dto.ProjectByPMDTO;
 import com.example.effortmanagement.presenter.AccountInfoPresenter;
 import com.example.effortmanagement.presenter.ProjectInfoPresenter;
+import com.example.effortmanagement.presenter.TaskPresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +42,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaskListFragment extends Fragment implements ProjectInfoContract.View, AccountInfoContract.View {
+public class TaskListFragment extends Fragment implements ProjectInfoContract.View, AccountInfoContract.View, TaskContract.View {
 
     /////////////////
     SearchView searchView;
@@ -48,6 +51,7 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
     SearchView.OnQueryTextListener onQueryTextListener;
     ////////////////////////////////
 
+    private List<List<Task>> allTaskList;
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
     private List<ProjectByPMDTO> listDataHeader;
@@ -56,6 +60,7 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
 
     private ProjectInfoPresenter projectInfoPresenter;
     private AccountInfoPresenter accountInfoPresenter;
+    private TaskPresenter taskPresenter;
     private int projectID;
     private String token;
     private AccountInfoDTO accountInfoDTO;
@@ -91,38 +96,10 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
 
         return view;
     }
-    private List<List<String>> addListChild(){
-
-        List<List<String>> listDataChild = new ArrayList<>();
-        List<String> project1 = new ArrayList<String>();
-        project1.add("Task 1 1");
-        project1.add("Task 1 2");
-        project1.add("Task 1 3");
-        project1.add("Task 1 4");
-        project1.add("Task 1 5");
-        project1.add("Task 1 6");
-
-        List<String> project2 = new ArrayList<String>();
-        project2.add("Task 2 1");
-        project2.add("Task 2 2");
-
-
-        List<String> project3 = new ArrayList<String>();
-        project3.add("Task 3 1");
-        project3.add("Task 3 2");
-        project3.add("Task 3 3");
-
-        // Adding child data
-        listDataChild.add(project1);
-        listDataChild.add(project2);
-        listDataChild.add(project3);
-
-        return listDataChild;
-    }
     /*
      * Preparing the list data
      */
-    private void prepareListData(final List<ProjectByPMDTO> listDataHeader,final List<List<String>> listDataChild) {
+    private void prepareListData(final List<ProjectByPMDTO> listDataHeader,final List<List<Task>> listDataChild) {
         listAdapter = new ExpandableListAdapter(requireContext(), listDataHeader, listDataChild);
         expListView.setAdapter(listAdapter);
         // Listview Group click listener
@@ -227,11 +204,19 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
         accountInfoPresenter = new AccountInfoPresenter();
         accountInfoPresenter.setmView(this);
 
+        taskPresenter = new TaskPresenter();
+        taskPresenter.setmView(this);
     }
 
     @Override
     public void getProjectInfoSuccess(List<ProjectByPMDTO> projectByPMDTOList) {
-        prepareListData(projectByPMDTOList, addListChild());
+        if(projectByPMDTOList != null) {
+            allTaskList = new ArrayList<>();
+            for (ProjectByPMDTO projectByPMDTO : projectByPMDTOList) {
+                taskPresenter.getTaskInfo(projectByPMDTO.getProjectId(), token);
+            }
+            prepareListData(projectByPMDTOList, allTaskList);
+        }
     }
 
     @Override
@@ -248,6 +233,16 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
 
     @Override
     public void getAccountInfoFailure(String message) {
+
+    }
+
+    @Override
+    public void getTaskInfoSuccess(List<Task> tasks) {
+        allTaskList.add(tasks);
+    }
+
+    @Override
+    public void getTaskInfoFailure(String message) {
 
     }
 }

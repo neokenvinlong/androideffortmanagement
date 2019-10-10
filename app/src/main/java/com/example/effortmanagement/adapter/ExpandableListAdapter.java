@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.effortmanagement.R;
+import com.example.effortmanagement.model.Task;
 import com.example.effortmanagement.model.dto.ProjectByPMDTO;
 
 import java.util.ArrayList;
@@ -20,12 +21,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<ProjectByPMDTO> listDataHeader; // header titles
     // child data in format of header title, child title
-    private List<List<String>> _listDataChild;
-
-    public ExpandableListAdapter(Context context, List<ProjectByPMDTO> listDataHeader, List<List<String>> _listDataChild) {
+    private List<List<Task>> _listDataChild;
+    private List<TextView> txtId;
+    public ExpandableListAdapter(Context context, List<ProjectByPMDTO> listDataHeader, List<List<Task>> _listDataChild) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this._listDataChild = _listDataChild;
+        txtId = new ArrayList<>();
     }
 
     @Override
@@ -51,8 +53,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         TextView listViewItem = convertView.findViewById(R.id.lvItem);
-        ArrayList<String> item = (ArrayList) getChild(groupPosition,childPosition);
-        listViewItem.setText(item.get(childPosition));
+        ArrayList<Task> item = (ArrayList) getChild(groupPosition,childPosition);
+        listViewItem.setText(item.get(childPosition).getTitle());
 
         return convertView;
     }
@@ -78,19 +80,47 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
+    public View getGroupView(final int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
+//        ProjectByPMDTO headerTitle = (ProjectByPMDTO) getGroup(groupPosition);
+//        if (convertView == null) {
+//            LayoutInflater infalInflater = (LayoutInflater) this.context
+//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            convertView = infalInflater.inflate(R.layout.list_group, null);
+//        }
+//
+//        TextView lblListHeader = (TextView) convertView
+//                .findViewById(R.id.lblListHeader);
+//        lblListHeader.setTypeface(null, Typeface.BOLD);
+//        lblListHeader.setText(headerTitle.getProjectName());
+//
+//        return convertView;
         ProjectByPMDTO headerTitle = (ProjectByPMDTO) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
+//            txtView.add((TextView) convertView.findViewById(R.id.lblListHeader));
+            txtId.add((TextView) convertView.findViewById(R.id.lblId));
+
+            convertView.findViewById(R.id.btnAddTask).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println(txtId.get(groupPosition).getText().toString());
+                }
+            });
+
+
         }
 
-        TextView lblListHeader = (TextView) convertView
+        TextView lblListHeader = convertView
                 .findViewById(R.id.lblListHeader);
+        TextView lblListId = convertView
+                .findViewById(R.id.lblId);
+
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle.getProjectName());
+        lblListId.setText(headerTitle.getProjectId() + "");
 
         return convertView;
     }
