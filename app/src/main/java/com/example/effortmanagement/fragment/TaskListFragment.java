@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.effortmanagement.R;
 import com.example.effortmanagement.adapter.ExpandableListAdapter;
-import com.example.effortmanagement.adapter.ProjectAdapter;
 import com.example.effortmanagement.contract.AccountInfoContract;
 import com.example.effortmanagement.contract.ProjectInfoContract;
 import com.example.effortmanagement.contract.TaskContract;
@@ -33,9 +31,9 @@ import com.example.effortmanagement.model.dto.ProjectByPMDTO;
 import com.example.effortmanagement.presenter.AccountInfoPresenter;
 import com.example.effortmanagement.presenter.ProjectInfoPresenter;
 import com.example.effortmanagement.presenter.TaskPresenter;
+import com.example.effortmanagement.view.ViewTaskActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -54,14 +52,15 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
     private List<List<Task>> allTaskList;
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
-    private List<ProjectByPMDTO> listDataHeader;
+    //private List<ProjectByPMDTO> listDataHeader;
     //private List<List<String>> listDataChild;
     private Button btnAddTask;
 
     private ProjectInfoPresenter projectInfoPresenter;
     private AccountInfoPresenter accountInfoPresenter;
     private TaskPresenter taskPresenter;
-    private int projectID;
+    public static int employeeID;
+    public static int taskID;
     private String token;
     private AccountInfoDTO accountInfoDTO;
     private String accountName;
@@ -83,6 +82,7 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
         view = inflater.inflate(R.layout.fragment_task_list, container, false);
         init();
         token = this.getActivity().getIntent().getStringExtra("token");
+
         accountName = this.getActivity().getIntent().getStringExtra("account");
 
         expListView = view.findViewById(R.id.expandableListView);
@@ -108,9 +108,6 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-                // Toast.makeText(getApplicationContext(),
-                // "Group Clicked " + listDataHeader.get(groupPosition),
-                // Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -119,20 +116,12 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
             }
         });
         // Listview Group collasped listener
         expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
-
             }
         });
         // Listview on child click listener
@@ -150,6 +139,11 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
                                 groupPosition).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                System.out.println(listDataHeader.get(groupPosition).getProjectName());
+                System.out.println(listDataChild.get(groupPosition).get(childPosition).getTask_id());
+                taskID = listDataChild.get(groupPosition).get(childPosition).getTask_id();
+                Intent intent = new Intent(v.getContext(), ViewTaskActivity.class);
+                startActivity(intent);
                 return false;
             }
         });
@@ -226,9 +220,9 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
 
     @Override
     public void getAccountInfoSuccess(AccountInfoDTO accountInfoDTO) {
-        projectID = accountInfoDTO.getId();
-        System.out.println("id la"+projectID);
-        this.projectInfoPresenter.getProjectInfo(projectID,token);
+        employeeID = accountInfoDTO.getId();
+        System.out.println("id la"+employeeID);
+        this.projectInfoPresenter.getProjectInfo(employeeID,token);
     }
 
     @Override

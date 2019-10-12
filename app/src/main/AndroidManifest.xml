@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MenuTheme">
-        <activity android:name=".view.EmployeeActivity"></activity>
+        <activity android:name=".view.ViewTaskActivity"></activity>
+        <activity android:name=".view.NewActivity" />
+        <activity android:name=".view.EmployeeActivity" />
         <activity
             android:name=".view.LoginActivity"
             android:label="@string/app_name"
@@ -24,7 +26,7 @@
         </activity>
         <activity
             android:name=".view.MainActivity"
-            android:windowSoftInputMode="adjustNothing"></activity>
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

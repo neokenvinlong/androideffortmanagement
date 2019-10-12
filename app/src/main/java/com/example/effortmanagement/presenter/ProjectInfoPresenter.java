@@ -53,7 +53,6 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
                 try{
                     if(response.isSuccessful()){
                         List<ProjectByPMDTO> list = response.body();
-
                         mView.getProjectInfoSuccess(list);
                     }else {
                         mView.getProjectInfoFailure("No Info");
