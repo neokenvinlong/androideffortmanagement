@@ -1,6 +1,7 @@
 package com.example.effortmanagement.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.effortmanagement.R;
 import com.example.effortmanagement.model.Task;
 import com.example.effortmanagement.model.dto.ProjectByPMDTO;
+import com.example.effortmanagement.view.MainActivity;
+import com.example.effortmanagement.view.NewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +86,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
+                             View convertView, final ViewGroup parent) {
 //        ProjectByPMDTO headerTitle = (ProjectByPMDTO) getGroup(groupPosition);
 //        if (convertView == null) {
 //            LayoutInflater infalInflater = (LayoutInflater) this.context
@@ -100,16 +105,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
-//            txtView.add((TextView) convertView.findViewById(R.id.lblListHeader));
             txtId.add((TextView) convertView.findViewById(R.id.lblId));
 
+            final View finalConvertView = convertView;
             convertView.findViewById(R.id.btnAddTask).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    System.out.println(txtId.get(groupPosition).getText().toString());
+                    Intent intent = new Intent(finalConvertView.getContext(), NewActivity.class);
+                    String projectID = txtId.get(groupPosition).getText().toString();
+                    intent.putExtra("projectid",projectID);
+                    finalConvertView.getContext().startActivity(intent);
+                    System.out.println(projectID);
                 }
             });
-
 
         }
 

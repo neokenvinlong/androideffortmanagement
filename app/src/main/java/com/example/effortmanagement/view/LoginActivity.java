@@ -28,8 +28,9 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
 
     private String roleT;
     private String tokenT;
+    public static  String tokens;
     private String nameT;
-    private AccountInfoDTO accountInfo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements AccountContract.
     @Override
     public void loginSuccess(String token) {
         tokenT = token;
+        tokens = token;
         this.rolePresenter.getAccountRole(this.edtUsername.getText().toString(), token);
     }
 
