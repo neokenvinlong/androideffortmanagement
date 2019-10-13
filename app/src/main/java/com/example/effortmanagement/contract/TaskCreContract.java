@@ -7,7 +7,7 @@ public interface TaskCreContract {
         void getTaskName(TaskCreDTO dto,String token);
     }
     interface View{
-        void getTaskNameSuccess(TaskCreDTO taskCreDTO);
+        void getTaskNameSuccess(String message);
         void getTaskNameFailure(String message);
     }
 

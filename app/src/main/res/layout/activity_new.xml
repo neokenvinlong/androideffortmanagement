@@ -25,15 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Title"/>
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Status"/>-->
-<!--    <Spinner-->
-<!--        android:id="@+id/spinStatus"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="Enter Status"/>-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +42,7 @@
         android:id="@+id/edtEndTaskTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter End Task Time"/>
+        android:hint="Choose End Task Time"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,6 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Calendar Effort"
+        android:text="0"
         android:inputType="number"/>
     <TextView
         android:layout_width="match_parent"
@@ -74,8 +66,8 @@
         android:id="@+id/txtId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Task"
-        />
+        android:text="Load id"
+        android:visibility="invisible"/>
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
