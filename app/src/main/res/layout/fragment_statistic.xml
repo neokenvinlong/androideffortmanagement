@@ -22,7 +22,13 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="40dp"
-                android:text="Project Name"/>
+                android:text="Statistic Project"
+                android:textColor="@drawable/bg"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Project Name"
+                android:textSize="20dp"/>
             <Spinner
                 android:id="@+id/spinProject"
                 android:layout_width="match_parent"
@@ -37,7 +43,13 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="40dp"
-                android:text="Employee Name"/>
+                android:text="Statistic Employee"
+                android:textColor="@drawable/bg"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Employee Name"
+                android:textSize="20dp"/>
             <Spinner
                 android:id="@+id/spin_emp"
                 android:layout_width="match_parent"

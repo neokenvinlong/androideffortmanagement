@@ -22,26 +22,28 @@ public class TaskCrePresenter implements TaskCreContract.Present {
 
     @Override
     public void getTaskName(TaskCreDTO dto, String token) {
-        Call<TaskCreDTO> call = taskCreService.getTaskCre(dto,"Bearer "+token);
-        call.enqueue(new Callback<TaskCreDTO>() {
-            @Override
-            public void onResponse(Call<TaskCreDTO> call, Response<TaskCreDTO> response) {
-                try{
-                    if(response.isSuccessful()){
-                        TaskCreDTO dto = response.body();
-                        mView.getTaskNameSuccess(dto);
-                    }else{
-                        mView.getTaskNameFailure("No Info");
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TaskCreDTO> call, Throwable t) {
-
-            }
-        });
+//        Call<TaskCreDTO> call = taskCreService.getTaskCre(dto,"Bearer "+token);
+//        call.enqueue(new Callback<TaskCreDTO>() {
+//            @Override
+//            public void onResponse(Call<TaskCreDTO> call, Response<TaskCreDTO> response) {
+//                try{
+//                    if(response.isSuccessful()){
+//                        TaskCreDTO dto1 = response.body();
+//                        mView.getTaskNameSuccess(dto1);
+//                    }else{
+//                        mView.getTaskNameFailure("No Info");
+//                    }
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TaskCreDTO> call, Throwable t) {
+//
+//            }
+//        });
+        Call call = taskCreService.getTaskCre(dto,"Bearer "+token);
+        call.enqueue(new );
     }
 }

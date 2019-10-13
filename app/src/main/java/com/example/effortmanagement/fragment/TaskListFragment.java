@@ -139,8 +139,8 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
                                 groupPosition).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
-                System.out.println(listDataHeader.get(groupPosition).getProjectName());
-                System.out.println(listDataChild.get(groupPosition).get(childPosition).getTask_id());
+//                System.out.println(listDataHeader.get(groupPosition).getProjectName());
+//                System.out.println(listDataChild.get(groupPosition).get(childPosition).getTask_id());
                 taskID = listDataChild.get(groupPosition).get(childPosition).getTask_id();
                 Intent intent = new Intent(v.getContext(), ViewTaskActivity.class);
                 startActivity(intent);
