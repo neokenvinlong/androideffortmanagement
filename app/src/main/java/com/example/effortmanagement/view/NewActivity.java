@@ -1,6 +1,7 @@
 package com.example.effortmanagement.view;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +40,7 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
     private int idInt;
     private Button btnSave;
     private int employeeID;
-    private TaskCreDTO taskCreDto;
+    private TaskCreDTO taskCreate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,15 +70,6 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
         spinner = findViewById(R.id.spinEmployee);
 
         employeeProPresenter.getEmployeeProInfo(idInt,tokens);
-
-//        Button btnSave = findViewById(R.id.btnSave);
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                taskCrePresenter.getTaskName(tokens);
-//                Toast.makeText(NewActivity.this, "Add Successful", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
     }
 
@@ -112,31 +104,13 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
     }
 
     @Override
-    public void getTaskNameSuccess(TaskCreDTO taskCreDTO) {
-        System.out.println("vao```");
-        String title = edtTitle.getText().toString();
-        String desc = edtDesc.getText().toString();
-        String status = "NOT-START";
-        int calendarEffort = Integer.valueOf(edtCalendarEffort.getText().toString());
-
-        taskCreDTO = new TaskCreDTO(title,desc,status,date,calendarEffort,idInt,employeeID);
-        this.taskCreDto = taskCreDTO;
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                System.out.println(taskCreDto.getTitle());
-//                taskCrePresenter.getTaskName(taskCreDto ,tokens);
-//                Toast.makeText(NewActivity.this, "Clicked!!!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-        Toast.makeText(this, "Create Successfully!", Toast.LENGTH_SHORT).show();
+    public void getTaskNameSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void getTaskNameFailure(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -170,21 +144,52 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
 
             }
         });
-
+        //get value to create task
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(taskCreDto.getTitle());
-                taskCrePresenter.getTaskName(taskCreDto ,tokens);
-                Toast.makeText(NewActivity.this, "Clicked!!!", Toast.LENGTH_SHORT).show();
+                System.out.println("vao```");
+                String title = edtTitle.getText().toString();
+                String desc = edtDesc.getText().toString();
+                String status = "NOT-START";
+                int calendarEffort = Integer.valueOf(edtCalendarEffort.getText().toString());
+//                System.out.println("title la"+title);
+//                System.out.println("Calendar la"+ calendarEffort);
+//                System.out.println("Date la"+ date);
+                taskCreate = new TaskCreDTO(title,desc,status,date,calendarEffort,idInt,employeeID);
+                //System.out.println(taskCreDto.getTitle());
+                if(checkCreate(title,calendarEffort,date)){
+                    taskCrePresenter.getTaskName(taskCreate, tokens);
+                    Toast.makeText(NewActivity.this, "Create Successfully", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(NewActivity.this, MainActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
-
-        //spinner.setSelection();
     }
 
     @Override
     public void getEmployeeProInfoFailure(String message) {
         Toast.makeText(this, "FAIL", Toast.LENGTH_LONG).show();
+    }
+    private boolean checkCreate(String title, int calendarEffort, String endDate) {
+        boolean isValid = true;
+        if (title.equals("")) {
+            edtTitle.setError("Title Task is required !");
+            isValid = false;
+        }
+        if (calendarEffort == 0) {
+            edtCalendarEffort.setError("Calendar Effort is required !");
+            isValid = false;
+        }
+//        if(!endDate.matches("(([0-9]{4})-([0-9]{2})-([0-9]{2}))"))
+        if(endDate == null){
+            edtEndTaskTime.setError("End task time is required!");
+            isValid = false;
+        }
+        return isValid;
     }
 }
