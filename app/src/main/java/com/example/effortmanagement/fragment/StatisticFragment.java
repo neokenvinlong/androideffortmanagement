@@ -288,8 +288,7 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
                 for(EmployeeProDTO dto: listDTO){
                     if(empName.equals(dto.getEmployeeName())){
                         employeeID = dto.getEmployeeID();
-                        ///////////////////////////call khi sua xog api
-                        //taskEmpEffortPresenter.getTaskEmpEffortChart(dto.getEmployeeID(),token);
+                        taskEmpEffortPresenter.getTaskEmpEffortChart(dto.getEmployeeID(),token);
                         getEmpID(employeeID);
                         break;
                     }
@@ -369,8 +368,10 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
         }
 
         ArrayList<BarEntry> values = new ArrayList<>();
+        int temp = 0 ;
         for(int i=0; i < listDTO.size(); i++){
-            values.add(new BarEntry((i+1)*2, new float[]{actualList.get(i),calendarList.get(i)}));
+            temp += 15;
+            values.add(new BarEntry(temp, new float[]{actualList.get(i),calendarList.get(i)}));
         }
 //        values.add(new BarEntry(5, new float[]{ -10, 10 }));
 //        values.add(new BarEntry(15, new float[]{ -12, 13 }));

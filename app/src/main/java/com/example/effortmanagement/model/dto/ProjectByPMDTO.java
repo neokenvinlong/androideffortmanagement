@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ProjectByPMDTO {
 
-    @SerializedName("id")
+    @SerializedName("project_id")
     private int projectId;
 
     @SerializedName("name")

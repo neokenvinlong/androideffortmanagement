@@ -56,6 +56,8 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
         TextView txtID = findViewById(R.id.txtId);
         txtID.setText(idInt+"");
 
+        edtTitle = findViewById(R.id.edtTitle);
+        edtDesc = findViewById(R.id.edtDesc);
         edtEndTaskTime = findViewById(R.id.edtEndTaskTime);
         edtEndTaskTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,9 +65,6 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
                 getDate();
             }
         });
-
-        edtTitle = findViewById(R.id.edtTitle);
-        edtDesc = findViewById(R.id.edtDesc);
         edtCalendarEffort = findViewById(R.id.edtCalendarEffort);
         spinner = findViewById(R.id.spinEmployee);
 
@@ -122,14 +121,14 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
 
         taskCreDTO = new TaskCreDTO(title,desc,status,date,calendarEffort,idInt,employeeID);
         this.taskCreDto = taskCreDTO;
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println(taskCreDto.getTitle());
-                taskCrePresenter.getTaskName(taskCreDto ,tokens);
-                Toast.makeText(NewActivity.this, "Clicked!!!", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println(taskCreDto.getTitle());
+//                taskCrePresenter.getTaskName(taskCreDto ,tokens);
+//                Toast.makeText(NewActivity.this, "Clicked!!!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         Toast.makeText(this, "Create Successfully!", Toast.LENGTH_SHORT).show();
@@ -171,12 +170,21 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
 
             }
         });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(taskCreDto.getTitle());
+                taskCrePresenter.getTaskName(taskCreDto ,tokens);
+                Toast.makeText(NewActivity.this, "Clicked!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //spinner.setSelection();
     }
 
     @Override
     public void getEmployeeProInfoFailure(String message) {
-
         Toast.makeText(this, "FAIL", Toast.LENGTH_LONG).show();
     }
 }
