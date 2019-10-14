@@ -83,6 +83,7 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
         View view;
         view = inflater.inflate(R.layout.fragment_task_list, container, false);
         init();
+
         token = this.getActivity().getIntent().getStringExtra("token");
 
         accountName = this.getActivity().getIntent().getStringExtra("account");
@@ -241,4 +242,5 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
     public void getTaskInfoFailure(String message) {
 
     }
+
 }

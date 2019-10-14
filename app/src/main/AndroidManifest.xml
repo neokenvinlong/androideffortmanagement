@@ -13,7 +13,8 @@
         android:theme="@style/MenuTheme">
         <activity android:name=".view.ViewTaskActivity"></activity>
         <activity android:name=".view.NewActivity" />
-        <activity android:name=".view.EmployeeActivity" />
+        <activity android:name=".view.EmployeeActivity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".view.LoginActivity"
             android:label="@string/app_name"

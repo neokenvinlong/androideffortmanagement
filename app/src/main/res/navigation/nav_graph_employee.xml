@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_employee"
-    app:startDestination="@id/nav_task">
+    app:startDestination="@id/nav_task_employee">
     <fragment
-        android:id="@+id/nav_task"
-        android:name="com.example.effortmanagement.fragment.TaskListFragment"
-        android:label="fragment_task_list"
-        tools:layout="@layout/fragment_task_list">
-        <action
-            android:id="@+id/action_task_list_to_settings"
-            app:destination="@id/nav_settings" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.example.effortmanagement.fragment.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings">
+        android:id="@+id/nav_task_employee"
+        android:name="com.example.effortmanagement.fragment.EmployeeListFragment"
+        android:label="fragment_employee_list"
+        tools:layout="@layout/fragment_employee_list">
+
+        <action android:id="@+id/nav_task_employee_to_nav_settings_employee"
+            app:destination="@+id/nav_settings_employee"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings_employee"
+        android:name="com.example.effortmanagement.fragment.EmployeeSettingsFragment"
+        tools:layout="@layout/fragment_employee_settings"/>
 
 </navigation>

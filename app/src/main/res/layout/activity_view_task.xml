@@ -36,6 +36,26 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Status"/>
+    <Spinner
+        android:id="@+id/spinStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/status_arrays"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Created Date"/>
+    <EditText
+        android:id="@+id/edtCreatedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:focusable="false"
+        android:clickable="false"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="End Task Time"/>
     <EditText
         android:id="@+id/edtEndTaskTime"
@@ -51,16 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Calendar Effort"
-        android:inputType="number"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Calendar Effort"/>
-    <EditText
-        android:id="@+id/edtActualEffort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Actual Effort"
         android:inputType="number"/>
     <TextView
         android:layout_width="match_parent"
