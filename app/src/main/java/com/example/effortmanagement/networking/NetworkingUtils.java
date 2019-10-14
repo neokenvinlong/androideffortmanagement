@@ -9,6 +9,7 @@ import com.example.effortmanagement.networking.API.RoleService;
 import com.example.effortmanagement.networking.API.TaskCreService;
 import com.example.effortmanagement.networking.API.TaskEffortService;
 import com.example.effortmanagement.networking.API.TaskEmpEffortService;
+import com.example.effortmanagement.networking.API.TaskInfoService;
 import com.example.effortmanagement.networking.API.TaskService;
 
 public class NetworkingUtils {
@@ -21,6 +22,7 @@ public class NetworkingUtils {
     private static EmployeeProService employeeProService;
     private static TaskEffortService taskEffortService;
     private static TaskEmpEffortService taskEmpEffortService;
+    private static TaskInfoService taskInfoService;
 
     public static AccountService getUserApiInstance() {
         if (accountService == null)
@@ -82,5 +84,11 @@ public class NetworkingUtils {
             taskEmpEffortService = RetrofitAdapter.getInstance().create(TaskEmpEffortService.class);
         }
         return taskEmpEffortService;
+    }
+    public static TaskInfoService getTaskInfoApiInstance(){
+        if(taskInfoService == null){
+            taskInfoService = RetrofitAdapter.getInstance().create(TaskInfoService.class);
+        }
+        return taskInfoService;
     }
 }

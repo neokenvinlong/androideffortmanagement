@@ -137,6 +137,7 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
                         break;
                     }
                 }
+                //spinner.setSelection(0);
             }
 
             @Override
@@ -164,7 +165,7 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
 //                    Intent intent = new Intent(NewActivity.this, MainActivity.class);
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    startActivity(intent);
-                    finish();
+                    //finish();
                 }
 
             }
