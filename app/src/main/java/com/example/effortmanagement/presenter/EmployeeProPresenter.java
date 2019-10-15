@@ -32,7 +32,7 @@ public class EmployeeProPresenter implements EmployeeProContract.Presenter {
                         List<EmployeeProDTO> list = response.body();
                         mView.getEmployeeProInfoSuccess(list);
                     }else {
-                        mView.getEmployeeProInfoFailure("No Info");
+                        mView.getEmployeeProInfoFailure("No Info Employee Pro");
                     }
                 }catch(Exception ex){
                     ex.printStackTrace();

@@ -28,9 +28,10 @@ public class TaskEmpEffortPresenter implements TaskEmpEffortContract.Presenter {
             public void onResponse(Call<List<TaskEmpEffortDTO>> call, Response<List<TaskEmpEffortDTO>> response) {
                 try{
                     if(response.isSuccessful()){
+                        System.out.println("1234");
                         mView.getTaskEmpEffortChartSuccess(response.body());
                     }else {
-                        mView.getTaskEmpEffortChartFailure("No Info");
+                        mView.getTaskEmpEffortChartFailure("No Info 1");
                     }
                 }catch(Exception e){
                     e.printStackTrace();
