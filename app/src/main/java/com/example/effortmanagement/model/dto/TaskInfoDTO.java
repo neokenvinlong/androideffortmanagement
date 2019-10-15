@@ -30,6 +30,9 @@ public class TaskInfoDTO {
     @SerializedName("employee_id")
     private int employeeID;
 
+    @SerializedName("effort")
+    private int actualEffort;
+
     public TaskInfoDTO() {
     }
 
@@ -115,5 +118,13 @@ public class TaskInfoDTO {
 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
+    }
+
+    public int getActualEffort() {
+        return actualEffort;
+    }
+
+    public void setActualEffort(int actualEffort) {
+        this.actualEffort = actualEffort;
     }
 }

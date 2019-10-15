@@ -25,27 +25,6 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
 
     @Override
     public void getProjectInfo(int id, String token) {
-//        Call<> call = projectByPMService.getProjectInfoByPM(id,"Bearer " + token);
-//        call.enqueue(new Callback<ProjectByPMDTO>() {
-//            @Override
-//            public void onResponse(Call<ProjectByPMDTO> call, Response<ProjectByPMDTO> response) {
-//                try{
-//                    if(response.isSuccessful()){
-//                        ProjectByPMDTO dto = response.body();
-//
-//                        mView.getProjectInfoSuccess(dto);
-//                    }else {
-//                        mView.getProjectInfoFailure("No Info");
-//                    }
-//                }catch(Exception ex){
-//                    ex.printStackTrace();
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<ProjectByPMDTO> call, Throwable t) {
-//                mView.getProjectInfoFailure("No info");
-//            }
-//        });
         Call<List<ProjectByPMDTO>> call = projectByPMService.getProjectInfoByPM(id,"Bearer "+token);
         call.enqueue(new Callback<List<ProjectByPMDTO>>() {
             @Override

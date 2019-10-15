@@ -116,11 +116,11 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
     @Override
     public void getEmployeeProInfoSuccess(final List<EmployeeProDTO> listDTO) {
         List<String> employeeName = new ArrayList<>();
-        System.out.println(listDTO);
+//        System.out.println(listDTO);
         for (EmployeeProDTO dto: listDTO){
             employeeName.add(dto.getEmployeeName());
         }
-        System.out.println(employeeName);
+//        System.out.println(employeeName);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, employeeName);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
@@ -154,11 +154,7 @@ public class NewActivity extends AppCompatActivity implements TaskCreContract.Vi
                 String desc = edtDesc.getText().toString();
                 String status = "NOT-START";
                 int calendarEffort = Integer.valueOf(edtCalendarEffort.getText().toString());
-//                System.out.println("title la"+title);
-//                System.out.println("Calendar la"+ calendarEffort);
-//                System.out.println("Date la"+ date);
                 taskCreate = new TaskCreDTO(title,desc,status,date,calendarEffort,idInt,employeeID);
-                //System.out.println(taskCreDto.getTitle());
                 if(checkCreate(title,calendarEffort,date)){
                     taskCrePresenter.getTaskName(taskCreate, tokens);
                     Toast.makeText(NewActivity.this, "Create Successfully", Toast.LENGTH_SHORT).show();

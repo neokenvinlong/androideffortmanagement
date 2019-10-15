@@ -134,16 +134,6 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
-                Toast.makeText(
-                        getContext(),
-                        listDataHeader.get(groupPosition).getProjectName()
-                                + " : "
-                                + listDataChild.get(
-                                groupPosition).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
-//                System.out.println(listDataHeader.get(groupPosition).getProjectName());
-//                System.out.println(listDataChild.get(groupPosition).get(childPosition).getTask_id());
                 taskID = listDataChild.get(groupPosition).get(childPosition).getTask_id();
                 Intent intent = new Intent(v.getContext(), ViewTaskActivity.class);
                 startActivity(intent);

@@ -2,26 +2,43 @@ package com.example.effortmanagement.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.effortmanagement.R;
+import com.example.effortmanagement.contract.EmployeeProContract;
 import com.example.effortmanagement.contract.TaskInfoContract;
+import com.example.effortmanagement.model.dto.EmployeeProDTO;
 import com.example.effortmanagement.model.dto.TaskInfoDTO;
 import com.example.effortmanagement.presenter.EmployeeProPresenter;
-import com.example.effortmanagement.presenter.TaskCrePresenter;
 import com.example.effortmanagement.presenter.TaskInfoPresenter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static com.example.effortmanagement.fragment.TaskListFragment.taskID;
 import static com.example.effortmanagement.view.LoginActivity.tokens;
 
-public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContract.View {
+public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContract.View, EmployeeProContract.View {
     private TaskInfoPresenter taskInfoPresenter;
-    private EditText edtTitle, edtDescription, edtEndDate,edtCalendarEffort, edtCreatedDate;
+    private EmployeeProPresenter employeeProPresenter;
+    EditText edtTitle, edtDescription, edtEndDate, edtCalendarEffort, edtCreatedDate;
     private Spinner spinStatus, spinEmployee;
-    private TextView txtTaskID, txtProjectID;
+    private TextView txtTaskID, txtProjectID,txtEmployeeID;
+    private String date;
+    private int employeeID;
+    private int empID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +46,12 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
 
         init();
 
-        txtTaskID= findViewById(R.id.txtTaskID);
-        txtTaskID.setText(taskID+"");
+        txtTaskID = findViewById(R.id.txtTaskID);
+        txtProjectID = findViewById(R.id.txtProjectID);
+        txtEmployeeID = findViewById(R.id.txtEmployeeID);
+        //txtTaskID.setText(taskID+"");
         edtTitle = findViewById(R.id.edtTitle);
-        edtDescription =findViewById(R.id.edtDesc);
+        edtDescription = findViewById(R.id.edtDesc);
         edtCalendarEffort = findViewById(R.id.edtCalendarEffort);
         edtCreatedDate = findViewById(R.id.edtCreatedDate);
         edtEndDate = findViewById(R.id.edtEndTaskTime);
@@ -41,8 +60,7 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
         spinEmployee = findViewById(R.id.spinEmployee);
 
 
-
-        taskInfoPresenter.getTaskInfo(taskID,tokens);
+        taskInfoPresenter.getTaskInfo(taskID, tokens);
 
 
     }
@@ -50,20 +68,123 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
     private void init() {
         taskInfoPresenter = new TaskInfoPresenter();
         taskInfoPresenter.setmView(this);
+
+        employeeProPresenter = new EmployeeProPresenter();
+        employeeProPresenter.setmView(this);
     }
 
     @Override
-    public void getTaskInfoSuccess(TaskInfoDTO dto) {
-        System.out.println("alooooooooo"+dto);
+    public void getTaskInfoSuccess(final TaskInfoDTO dto) {
         edtTitle.setText(dto.getTitle());
         edtDescription.setText(dto.getDescription());
-        edtCalendarEffort.setText(dto.getCalendarEffort());
+        edtCalendarEffort.setText(dto.getCalendarEffort() + "");
         edtCreatedDate.setText(dto.getCreatedDate());
         edtEndDate.setText(dto.getEndDate());
+        edtEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edtEndDate.setText("");
+                getDate();
+            }
+        });
+        txtProjectID.setText(dto.getProjectID() + "");
+        txtTaskID.setText(dto.getTaskID() + "");
+        txtEmployeeID.setText(dto.getEmployeeID()+"");
+
+        empID = dto.getEmployeeID();
+
+        String status = dto.getStatus();
+        spinStatus.setSelection(getIndex(spinStatus, status));
+
+
+        doSomething(dto.getEmployeeID());
+
+        employeeProPresenter.getEmployeeProInfo(dto.getProjectID(),tokens);
+
     }
 
     @Override
     public void getTaskInfoFailure(String message) {
+
+    }
+
+    private void getDate() {
+        final Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DATE);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                calendar.set(i, i1, i2);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                edtEndDate.setText(simpleDateFormat.format(calendar.getTime()));
+                date = edtEndDate.getText().toString();
+            }
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private int getIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
+    private void doSomething(int employeeID1){
+        employeeID = employeeID1;
+        Toast.makeText(this, employeeID+ " success", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void getEmployeeProInfoSuccess(final List<EmployeeProDTO> listDTO) {
+        List<String> employeeName = new ArrayList<>();
+        for (EmployeeProDTO dto: listDTO){
+            employeeName.add(dto.getEmployeeName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, employeeName);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinEmployee.setAdapter(dataAdapter);
+
+//        spinEmployee.setSelection(getIntIndex(spinEmployee, employeeID));
+        String empName;
+        for(int i = 0; i < listDTO.size(); i++){
+            if(empID == listDTO.get(i).getEmployeeID()){
+                empName = listDTO.get(i).getEmployeeName();
+                System.out.println("aaa"+empName);
+                spinEmployee.setSelection(getIndex(spinEmployee,empName));
+                break;
+            }
+        }
+
+        spinEmployee.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                String empName = parent.getItemAtPosition(position).toString();
+                System.out.println(empName);
+                for(EmployeeProDTO dto: listDTO){
+                    if(empName.equals(dto.getEmployeeName())){
+                        employeeID = dto.getEmployeeID();
+                        doSomething(dto.getEmployeeID());
+                        break;
+                    }
+                }
+                //spinner.setSelection(0);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getEmployeeProInfoFailure(String message) {
 
     }
 }
