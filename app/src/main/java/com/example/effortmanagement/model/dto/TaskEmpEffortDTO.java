@@ -11,15 +11,15 @@ public class TaskEmpEffortDTO {
     private String title;
 
     @SerializedName("effort")
-    private int effort;
+    private double effort;
 
     @SerializedName("calendar_effort")
-    private int calendarEffort;
+    private double calendarEffort;
 
     public TaskEmpEffortDTO() {
     }
 
-    public TaskEmpEffortDTO(int id, String title, int effort, int calendarEffort) {
+    public TaskEmpEffortDTO(int id, String title, double effort, double calendarEffort) {
         this.id = id;
         this.title = title;
         this.effort = effort;
@@ -42,19 +42,19 @@ public class TaskEmpEffortDTO {
         this.title = title;
     }
 
-    public int getEffort() {
+    public double getEffort() {
         return effort;
     }
 
-    public void setEffort(int effort) {
+    public void setEffort(double effort) {
         this.effort = effort;
     }
 
-    public int getCalendarEffort() {
+    public double getCalendarEffort() {
         return calendarEffort;
     }
 
-    public void setCalendarEffort(int calendarEffort) {
+    public void setCalendarEffort(double calendarEffort) {
         this.calendarEffort = calendarEffort;
     }
 }

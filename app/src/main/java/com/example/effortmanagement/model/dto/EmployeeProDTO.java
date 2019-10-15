@@ -1,5 +1,7 @@
 package com.example.effortmanagement.model.dto;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 public class EmployeeProDTO {
@@ -32,5 +34,11 @@ public class EmployeeProDTO {
 
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.getEmployeeName();
     }
 }

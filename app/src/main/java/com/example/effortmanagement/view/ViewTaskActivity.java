@@ -21,7 +21,6 @@ import com.example.effortmanagement.contract.TaskUpdateContract;
 import com.example.effortmanagement.model.dto.EmployeeProDTO;
 import com.example.effortmanagement.model.dto.TaskCreDTO;
 import com.example.effortmanagement.model.dto.TaskInfoDTO;
-import com.example.effortmanagement.networking.API.TaskUpdateService;
 import com.example.effortmanagement.presenter.EmployeeProPresenter;
 import com.example.effortmanagement.presenter.TaskInfoPresenter;
 import com.example.effortmanagement.presenter.TaskUpdatePresenter;
@@ -228,7 +227,7 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
 //                    Intent intent = new Intent(NewActivity.this, MainActivity.class);
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    startActivity(intent);
-                    //finish();
+                    finish();
                 }
             }
         });

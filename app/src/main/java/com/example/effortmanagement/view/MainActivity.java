@@ -1,5 +1,7 @@
 package com.example.effortmanagement.view;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,4 +31,5 @@ public class MainActivity extends AppCompatActivity{
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
     }
+
 }

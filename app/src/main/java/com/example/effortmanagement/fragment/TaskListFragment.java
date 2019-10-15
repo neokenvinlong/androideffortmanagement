@@ -233,4 +233,14 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        accountInfoPresenter.getAccountInfo(accountName,token);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 }

@@ -87,11 +87,9 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
         projectInfoPresenter.getProjectInfo(employeeID,token);
 
         employeeProPresenter.getEmployeeProInfo(6,token);
-        System.out.println("ngoai2 la" + projectID);
-        System.out.println("ngoai2 la" + empID);
 
         //aaaaaaa
-        chart = (BarChart) view.findViewById(R.id.bar_chart);
+        chart = view.findViewById(R.id.bar_chart);
 
         //pie chart 2
         pieChart = view.findViewById(R.id.piechart);
@@ -121,21 +119,22 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
     }
     private void doSomething(int projectID1){
         projectID = projectID1;
-        System.out.println(projectID+" project id ngoai");
+//        System.out.println(projectID+" project id ngoai");
     }
 
     private void getEmpID(int empID1){
         empID = empID1;
-        System.out.println(empID+"employee id ngoai");
+//        System.out.println(empID+"employee id ngoai");
     }
+
     @Override
     public void getProjectInfoSuccess(final List<ProjectByPMDTO> projectByPMDTOList) {
         List<String> projectName = new ArrayList<>();
-        System.out.println("cccc"+projectByPMDTOList);
+//        System.out.println("cccc"+projectByPMDTOList);
         for (ProjectByPMDTO dto: projectByPMDTOList){
             projectName.add(dto.getProjectName());
         }
-        System.out.println("aaaa"+projectName);
+//        System.out.println("aaaa"+projectName);
         dataAdapter= new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_spinner_item, projectName);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -145,11 +144,11 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 String proName = parent.getItemAtPosition(position).toString();
-                System.out.println(proName);
+//                System.out.println(proName);
                 for(ProjectByPMDTO dto: projectByPMDTOList){
                     if(proName.equals(dto.getProjectName())){
-                        doSomething(dto.getProjectId());
                         taskEffortPresenter.getTaskEffortChart(dto.getProjectId(),token);
+                        doSomething(dto.getProjectId());
                         break;
                     }
                 }
@@ -204,29 +203,34 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
 
     @Override
     public void getEmployeeProInfoSuccess(final List<EmployeeProDTO> listDTO) {
-        System.out.println("list dto..."+listDTO);
+//        System.out.println("list dto..."+listDTO);
         List<String> employeeName = new ArrayList<>();
         for (EmployeeProDTO dto: listDTO){
             employeeName.add(dto.getEmployeeName());
         }
-        System.out.println("Employee....."+employeeName);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_spinner_item, employeeName);
+//        System.out.println("Employee....."+employeeName);
+        final ArrayAdapter<EmployeeProDTO> dataAdapter = new ArrayAdapter<>(getActivity().getBaseContext(), android.R.layout.simple_spinner_item, listDTO);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerP.setAdapter(dataAdapter);
 
         spinnerP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                String empName = parent.getItemAtPosition(position).toString();
-                System.out.println(empName);
-                for(EmployeeProDTO dto: listDTO){
-                    if(empName.equals(dto.getEmployeeName())){
-                        employeeID = dto.getEmployeeID();
-                        taskEmpEffortPresenter.getTaskEmpEffortChart(dto.getEmployeeID(),token);
-                        getEmpID(employeeID);
-                        break;
-                    }
-                }
+                EmployeeProDTO employeeProDTO = dataAdapter.getItem(position);
+                taskEmpEffortPresenter.getTaskEmpEffortChart(employeeProDTO.getEmployeeID(), token);
+                System.out.println("ID " + employeeProDTO.getEmployeeID());
+//                String empName = parent.getItemAtPosition(position).toString();
+//                System.out.println(empName);
+//                for(EmployeeProDTO dto: listDTO){
+//                    if(empName.equals(dto.getEmployeeName())){
+//                       System.out.println("id cua project la "+dto.getEmployeeID());
+//                        employeeID = dto.getEmployeeID();
+//                        System.out.println("id cua project la "+employeeID);
+//                        taskEmpEffortPresenter.getTaskEmpEffortChart(dto.getEmployeeID(),token);
+//                        getEmpID(employeeID);
+//                        break;
+//                    }
+//                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -252,6 +256,8 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
 
     @Override
     public void getTaskEmpEffortChartSuccess(List<TaskEmpEffortDTO> listDTO) {
+
+        System.out.println("Success 1");
         chart.setOnChartValueSelectedListener(this);
         chart.setDrawGridBackground(false);
         chart.getDescription().setEnabled(false);
@@ -293,12 +299,20 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
         // IMPORTANT: When using negative values in stacked bars, always make sure the negative values are in the array first
         List<Integer> actualList = new ArrayList<>();
         for(int i = 0; i < listDTO.size(); i++){
-            actualList.add((listDTO.get(i).getEffort())-((listDTO.get(i).getEffort())*2));
+//            actualList.add((listDTO.get(i).getEffort())-((listDTO.get(i).getEffort())*2));
+            double number = listDTO.get(i).getEffort();
+            String str = String.valueOf(number);
+            int result = Integer.parseInt(str.substring(0, str.lastIndexOf(".")));
+            actualList.add(result - (result*2));
         }
 
         List<Integer> calendarList = new ArrayList<>();
         for(int i = 0; i < listDTO.size(); i++){
-            calendarList.add(listDTO.get(i).getCalendarEffort());
+//            calendarList.add(listDTO.get(i).getCalendarEffort());
+            double number = listDTO.get(i).getCalendarEffort();
+            String str = String.valueOf(number);
+            int result = Integer.parseInt(str.substring(0, str.lastIndexOf(".")));
+            calendarList.add(result);
         }
 
         ArrayList<BarEntry> values = new ArrayList<>();
@@ -307,18 +321,6 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
             temp += 15;
             values.add(new BarEntry(temp, new float[]{actualList.get(i),calendarList.get(i)}));
         }
-//        values.add(new BarEntry(5, new float[]{ -10, 10 }));
-//        values.add(new BarEntry(15, new float[]{ -12, 13 }));
-//        values.add(new BarEntry(25, new float[]{ -15, 15 }));
-//        values.add(new BarEntry(35, new float[]{ -17, 17 }));
-//        values.add(new BarEntry(45, new float[]{ -19, 20 }));
-//        values.add(new BarEntry(45, new float[]{ -19, 20 }));
-//        values.add(new BarEntry(55, new float[]{ -19, 19 }));
-//        values.add(new BarEntry(65, new float[]{ -16, 16 }));
-//        values.add(new BarEntry(75, new float[]{ -13, 14 }));
-//        values.add(new BarEntry(85, new float[]{ -10, 11 }));
-//        values.add(new BarEntry(95, new float[]{ -5, 6 }));
-//        values.add(new BarEntry(105, new float[]{ -1, 2 }));
 
         BarDataSet set = new BarDataSet(values, "Actual - Calendar Effort");
         set.setDrawIcons(false);
@@ -328,28 +330,53 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
         set.setStackLabels(new String[]{
                 "Actual", "Calendar"
         });
-
+        chart.animateXY(1400,1400);
         BarData data = new BarData(set);
         data.setBarWidth(8.5f);
         chart.setData(data);
-        chart.invalidate();
+        System.out.println("Success 2");
+        //chart.invalidate();
 
-        int empIDTemp=0;
+////////////////////////////////////////////////////////////////
 
-        if(empIDTemp == 0){
-            empIDTemp = empID;
-            System.out.println("Temp id la "+ empIDTemp);
+/*        ArrayList<String> xVals = new ArrayList<>();
+        for (int i = 0; i < listDTO.size(); i++){
+            xVals.add(listDTO.get(i).getTitle());
         }
-        if(empIDTemp != empID){
+
+        List<Integer> actualList = new ArrayList<>();
+        for(int i = 0; i < listDTO.size(); i++){
+            actualList.add((listDTO.get(i).getEffort())-((listDTO.get(i).getEffort())*2));
+        }
+
+        List<Integer> calendarList = new ArrayList<>();
+        for(int i = 0; i < listDTO.size(); i++){
+            calendarList.add(listDTO.get(i).getCalendarEffort());
+        }
+        BarDataSet set;
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
+        BarData data;
+        for(int i = 0;i < listDTO.size(); i++){
+            ArrayList<BarEntry> yValsProp = new ArrayList<>();
+            yValsProp.add(new BarEntry(actualList.get(i),0));
+            yValsProp.add(new BarEntry(calendarList.get(i),0));
+            set = new BarDataSet(yValsProp, listDTO.get(i).getTitle());
+            int red = 164;
+            int green = 228;
+            int blue = 251;
+            set.setColor(Color.rgb(red, green, blue));
+            red += 20;
+            green += 20;
+            blue += 20;
+            dataSets.add(set);
+            data = new BarData(set);
             chart.setData(data);
-            chart.invalidate();
-            empIDTemp = empID;
-            System.out.println("Temp id sua lai la"+empIDTemp);
-        }
+        }*/
+
     }
 
     @Override
     public void getTaskEmpEffortChartFailure(String message) {
-
+        Toast.makeText(this.getActivity().getBaseContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
