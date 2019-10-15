@@ -20,6 +20,6 @@
         <item>NOT-START</item>
         <item>ON-GOING</item>
         <item>DONE</item>
-        <item>CANCELED</item>
+        <item>CANCEL</item>
     </string-array>
 </resources>

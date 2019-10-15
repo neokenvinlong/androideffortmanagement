@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -16,10 +17,14 @@ import android.widget.Toast;
 import com.example.effortmanagement.R;
 import com.example.effortmanagement.contract.EmployeeProContract;
 import com.example.effortmanagement.contract.TaskInfoContract;
+import com.example.effortmanagement.contract.TaskUpdateContract;
 import com.example.effortmanagement.model.dto.EmployeeProDTO;
+import com.example.effortmanagement.model.dto.TaskCreDTO;
 import com.example.effortmanagement.model.dto.TaskInfoDTO;
+import com.example.effortmanagement.networking.API.TaskUpdateService;
 import com.example.effortmanagement.presenter.EmployeeProPresenter;
 import com.example.effortmanagement.presenter.TaskInfoPresenter;
+import com.example.effortmanagement.presenter.TaskUpdatePresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,14 +34,20 @@ import java.util.List;
 import static com.example.effortmanagement.fragment.TaskListFragment.taskID;
 import static com.example.effortmanagement.view.LoginActivity.tokens;
 
-public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContract.View, EmployeeProContract.View {
+public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContract.View, EmployeeProContract.View
+, TaskUpdateContract.View {
     private TaskInfoPresenter taskInfoPresenter;
     private EmployeeProPresenter employeeProPresenter;
+    private TaskUpdatePresenter taskUpdatePresenter;
     EditText edtTitle, edtDescription, edtEndDate, edtCalendarEffort, edtCreatedDate;
     private Spinner spinStatus, spinEmployee;
     private TextView txtTaskID, txtProjectID,txtEmployeeID;
+    private Button btnSave;
     private String date;
+    private String statusResult;
+    private TaskCreDTO taskCreate;
     private int employeeID;
+    private int projectID;
     private int empID;
 
     @Override
@@ -71,6 +82,9 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
 
         employeeProPresenter = new EmployeeProPresenter();
         employeeProPresenter.setmView(this);
+
+        taskUpdatePresenter = new TaskUpdatePresenter();
+        taskUpdatePresenter.setmView(this);
     }
 
     @Override
@@ -92,9 +106,14 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
         txtEmployeeID.setText(dto.getEmployeeID()+"");
 
         empID = dto.getEmployeeID();
+        projectID = dto.getProjectID();
 
         String status = dto.getStatus();
         spinStatus.setSelection(getIndex(spinStatus, status));
+//        statusResult = spinStatus.getSelectedItem().toString();
+//        System.out.println("status result la "+statusResult);
+
+        btnSave = findViewById(R.id.btnUpdate);
 
 
         doSomething(dto.getEmployeeID());
@@ -126,7 +145,6 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
     }
 
     private int getIndex(Spinner spinner, String myString){
-
         int index = 0;
 
         for (int i=0;i<spinner.getCount();i++){
@@ -136,10 +154,12 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
         }
         return index;
     }
+
     private void doSomething(int employeeID1){
         employeeID = employeeID1;
         Toast.makeText(this, employeeID+ " success", Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void getEmployeeProInfoSuccess(final List<EmployeeProDTO> listDTO) {
         List<String> employeeName = new ArrayList<>();
@@ -150,7 +170,6 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinEmployee.setAdapter(dataAdapter);
 
-//        spinEmployee.setSelection(getIntIndex(spinEmployee, employeeID));
         String empName;
         for(int i = 0; i < listDTO.size(); i++){
             if(empID == listDTO.get(i).getEmployeeID()){
@@ -181,10 +200,71 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
 
             }
         });
+        //click button
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = edtTitle.getText().toString();
+                String desc = edtDescription.getText().toString();
+                statusResult = spinStatus.getSelectedItem().toString();
+                date = edtEndDate.getText().toString();
+//                System.out.println("status result la "+statusResult);
+                int calendarEffort = Integer.valueOf(edtCalendarEffort.getText().toString());
+                taskCreate = new TaskCreDTO(taskID,title,desc,statusResult,date,calendarEffort,projectID,employeeID);
+
+                System.out.println("update tra ve la"+taskCreate.getTaskId());
+                System.out.println("update tra ve la"+taskCreate.getTitle());
+                System.out.println("update tra ve la"+taskCreate.getDescription());
+                System.out.println("update tra ve la"+taskCreate.getStatus());
+                System.out.println("update tra ve la"+taskCreate.getEndDate());
+                System.out.println("update tra ve la"+taskCreate.getCalendarEffort());
+                System.out.println("update tra ve la"+taskCreate.getProjectId());
+                System.out.println("update tra ve la"+taskCreate.getEmployeeId());
+
+                if(checkUpdate(title,calendarEffort)){
+                    taskUpdatePresenter.getTaskUpdate(taskCreate, tokens);
+                    Toast.makeText(ViewTaskActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(NewActivity.this, MainActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+                    //finish();
+                }
+            }
+        });
+
     }
 
     @Override
     public void getEmployeeProInfoFailure(String message) {
 
+    }
+
+    @Override
+    public void getTaskUpdateSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getTaskUpdateFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean checkUpdate(String title, int calendarEffort) {
+        boolean isValid = true;
+        if (title.equals("")) {
+            edtTitle.setError("Title Task is required !");
+            isValid = false;
+        }
+        if (calendarEffort == 0) {
+            edtCalendarEffort.setError("Calendar Effort is required !");
+            isValid = false;
+        }
+//        if(!endDate.matches("(([0-9]{4})-([0-9]{2})-([0-9]{2}))"))
+//        if(endDate == null){
+//            edtEndDate.setError("End task time is required!");
+//            isValid = false;
+//        }
+        return isValid;
     }
 }

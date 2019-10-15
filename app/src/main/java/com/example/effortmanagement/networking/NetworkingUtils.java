@@ -11,6 +11,7 @@ import com.example.effortmanagement.networking.API.TaskEffortService;
 import com.example.effortmanagement.networking.API.TaskEmpEffortService;
 import com.example.effortmanagement.networking.API.TaskInfoService;
 import com.example.effortmanagement.networking.API.TaskService;
+import com.example.effortmanagement.networking.API.TaskUpdateService;
 
 public class NetworkingUtils {
     private static AccountService accountService;
@@ -23,6 +24,7 @@ public class NetworkingUtils {
     private static TaskEffortService taskEffortService;
     private static TaskEmpEffortService taskEmpEffortService;
     private static TaskInfoService taskInfoService;
+    private static TaskUpdateService taskUpdateService;
 
     public static AccountService getUserApiInstance() {
         if (accountService == null)
@@ -91,4 +93,11 @@ public class NetworkingUtils {
         }
         return taskInfoService;
     }
+    public static TaskUpdateService getTaskUpdateApiInstance(){
+        if(taskUpdateService == null){
+            taskUpdateService = RetrofitAdapter.getInstance().create(TaskUpdateService.class);
+        }
+        return taskUpdateService;
+    }
+
 }
