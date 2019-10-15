@@ -6,11 +6,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
-import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
-public interface TaskCreService {
+public interface TaskUpdateService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @POST("tasks/task/create")
-    Call<TaskCreDTO> getTaskCre(@Body TaskCreDTO dto, @Header("Authorization") String auth);
+    @PUT("tasks/task")
+    Call<TaskCreDTO> getTaskUpdate(@Body TaskCreDTO dto, @Header("Authorization") String auth);
 }

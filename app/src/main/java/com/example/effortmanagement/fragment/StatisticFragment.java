@@ -92,73 +92,6 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
 
         //aaaaaaa
         chart = (BarChart) view.findViewById(R.id.bar_chart);
-//
-//        chart.setOnChartValueSelectedListener(this);
-//        chart.setDrawGridBackground(false);
-//        chart.getDescription().setEnabled(false);
-//
-//        // scaling can now only be done on x- and y-axis separately
-//        chart.setPinchZoom(false);
-//
-//        chart.setDrawBarShadow(false);
-//        chart.setDrawValueAboveBar(true);
-//        chart.setHighlightFullBarEnabled(false);
-//
-//        chart.getAxisLeft().setEnabled(false);
-//        chart.getAxisRight().setAxisMaximum(25f);
-//        chart.getAxisRight().setAxisMinimum(-25f);
-//        chart.getAxisRight().setDrawGridLines(false);
-//        chart.getAxisRight().setDrawZeroLine(true);
-//        chart.getAxisRight().setLabelCount(7, false);
-//        chart.getAxisRight().setTextSize(9f);
-//
-//        XAxis xAxis = chart.getXAxis();
-//        xAxis.setDrawGridLines(false);
-//        xAxis.setDrawAxisLine(false);
-//        xAxis.setTextSize(9f);
-//        xAxis.setAxisMinimum(0f);
-//        xAxis.setAxisMaximum(110f);
-//        xAxis.setCenterAxisLabels(true);
-//        xAxis.setLabelCount(12);
-//        xAxis.setGranularity(10f);
-//
-//        Legend l = chart.getLegend();
-//        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-//        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-//        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-//        l.setDrawInside(false);
-//        l.setFormSize(8f);
-//        l.setFormToTextSpace(4f);
-//        l.setXEntrySpace(6f);
-//
-//        // IMPORTANT: When using negative values in stacked bars, always make sure the negative values are in the array first
-//        ArrayList<BarEntry> values = new ArrayList<>();
-//        values.add(new BarEntry(5, new float[]{ -10, 10 }));
-//        values.add(new BarEntry(15, new float[]{ -12, 13 }));
-//        values.add(new BarEntry(25, new float[]{ -15, 15 }));
-//        values.add(new BarEntry(35, new float[]{ -17, 17 }));
-//        values.add(new BarEntry(45, new float[]{ -19, 20 }));
-//        values.add(new BarEntry(45, new float[]{ -19, 20 }));
-//        values.add(new BarEntry(55, new float[]{ -19, 19 }));
-//        values.add(new BarEntry(65, new float[]{ -16, 16 }));
-//        values.add(new BarEntry(75, new float[]{ -13, 14 }));
-//        values.add(new BarEntry(85, new float[]{ -10, 11 }));
-//        values.add(new BarEntry(95, new float[]{ -5, 6 }));
-//        values.add(new BarEntry(105, new float[]{ -1, 2 }));
-//
-//        BarDataSet set = new BarDataSet(values, "Actual - Calendar Effort");
-//        set.setDrawIcons(false);
-//        set.setValueTextSize(7f);
-//        set.setAxisDependency(YAxis.AxisDependency.RIGHT);
-//        set.setColors(Color.rgb(67,67,72), Color.rgb(124,181,236));
-//        set.setStackLabels(new String[]{
-//                "Actual", "Calendar"
-//        });
-//
-//        BarData data = new BarData(set);
-//        data.setBarWidth(8.5f);
-//        chart.setData(data);
-//        chart.invalidate();
 
         //pie chart 2
         pieChart = view.findViewById(R.id.piechart);
@@ -239,6 +172,7 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
             try {
                 pieChart.setUsePercentValues(true);
 
+                pieChart.getDescription().setEnabled(false);
                 pieChart.setHoleRadius(25f);
                 pieChart.setTransparentCircleRadius(25f);
 
@@ -253,7 +187,7 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
                 PieData pieData = new PieData(pieDataSet);
 
                 pieChart.setData(pieData);
-                pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
                 pieChart.animateXY(1400,1400);
             }catch (Exception e){
                 e.printStackTrace();
@@ -399,6 +333,19 @@ public class StatisticFragment extends Fragment implements ProjectInfoContract.V
         data.setBarWidth(8.5f);
         chart.setData(data);
         chart.invalidate();
+
+        int empIDTemp=0;
+
+        if(empIDTemp == 0){
+            empIDTemp = empID;
+            System.out.println("Temp id la "+ empIDTemp);
+        }
+        if(empIDTemp != empID){
+            chart.setData(data);
+            chart.invalidate();
+            empIDTemp = empID;
+            System.out.println("Temp id sua lai la"+empIDTemp);
+        }
     }
 
     @Override
