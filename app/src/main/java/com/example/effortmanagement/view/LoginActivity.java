@@ -11,11 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.effortmanagement.R;
 import com.example.effortmanagement.contract.AccountContract;
-import com.example.effortmanagement.contract.AccountInfoContract;
 import com.example.effortmanagement.contract.RoleContract;
-import com.example.effortmanagement.fragment.SettingsFragment;
-import com.example.effortmanagement.model.dto.AccountInfoDTO;
-import com.example.effortmanagement.presenter.AccountInfoPresenter;
 import com.example.effortmanagement.presenter.AccountPresenter;
 import com.example.effortmanagement.presenter.RolePresenter;
 

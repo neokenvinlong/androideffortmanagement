@@ -75,9 +75,13 @@ public class EmployeeTaskDetailActivity extends AppCompatActivity implements Emp
                     int task_id = Integer.parseInt(txtTaskId.getText().toString());
                     System.out.println("TASK_ID 2 la: "+task_id);
                     double effort = Double.parseDouble(txtActualEffort.getText().toString());
-                    EmployeeUpdateEffortDTO employeeUpdateEffortDTO = new EmployeeUpdateEffortDTO(effort, task_id);
-                    employeeUpdateEffortPresenter.updateEffort(employeeUpdateEffortDTO, tokens);
-                    finish();
+                    if (effort > 0){
+                        EmployeeUpdateEffortDTO employeeUpdateEffortDTO = new EmployeeUpdateEffortDTO(effort, task_id);
+                        employeeUpdateEffortPresenter.updateEffort(employeeUpdateEffortDTO, tokens);
+                        finish();
+                    }else{
+                        Toast.makeText(EmployeeTaskDetailActivity.this, "Effort invalid", Toast.LENGTH_SHORT).show();
+                    }
                 }catch (Exception ex){
                     Toast.makeText(EmployeeTaskDetailActivity.this, "Effort invalid", Toast.LENGTH_SHORT).show();
                 }

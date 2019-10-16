@@ -243,6 +243,7 @@
                 tools:ignore="ContentDescription" />
 
             <Button
+                android:id="@+id/btnNotification"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -250,7 +251,7 @@
                 android:paddingLeft="40dp"
                 android:text="Notification"
                 android:textAllCaps="false"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"/>
 
         </FrameLayout>
 

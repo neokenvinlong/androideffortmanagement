@@ -90,8 +90,6 @@ public class EmployeeListFragment extends Fragment implements EmployeeTaskListCo
     @Override
     public void getListTaskOfEmployeeByAccountNameSuccess(List<EmployeeTaskListDTO> employeeTaskListList) {
 
-        //projectRecyclerView.setHasFixedSize(true);
-
         employeeTaskListAdapter = new EmployeeTaskListAdapter(getActivity(), employeeTaskListList, this);
 
         employeeTaskListRecyclerView.setAdapter(employeeTaskListAdapter);

@@ -21,6 +21,7 @@ import com.example.effortmanagement.presenter.AccountInfoPresenter;
 import com.example.effortmanagement.presenter.AccountPresenter;
 import com.example.effortmanagement.presenter.RolePresenter;
 import com.example.effortmanagement.view.LoginActivity;
+import com.example.effortmanagement.view.NotificationDetailActivity;
 
 import org.w3c.dom.Text;
 
@@ -39,7 +40,7 @@ public class SettingsFragment extends Fragment implements AccountInfoContract.Vi
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_settings, container, false);
 
         init();
@@ -61,6 +62,14 @@ public class SettingsFragment extends Fragment implements AccountInfoContract.Vi
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Signed out successful", Toast.LENGTH_LONG).show();
                 getActivity().finish();
+            }
+        });
+        Button btnNotification = view.findViewById(R.id.btnNotification);
+        btnNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(container.getContext(), NotificationDetailActivity.class);
+                startActivity(intent);
             }
         });
 

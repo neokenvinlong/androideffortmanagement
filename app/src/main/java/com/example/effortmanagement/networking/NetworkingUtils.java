@@ -3,10 +3,12 @@ package com.example.effortmanagement.networking;
 import com.example.effortmanagement.adapter.RetrofitAdapter;
 import com.example.effortmanagement.networking.API.AccountInfoService;
 import com.example.effortmanagement.networking.API.AccountService;
+import com.example.effortmanagement.networking.API.ApproveEffortService;
 import com.example.effortmanagement.networking.API.EmployeeProService;
 import com.example.effortmanagement.networking.API.EmployeeTaskDetailService;
 import com.example.effortmanagement.networking.API.EmployeeTaskListService;
 import com.example.effortmanagement.networking.API.EmployeeUpdateEffortService;
+import com.example.effortmanagement.networking.API.NotificationDetailService;
 import com.example.effortmanagement.networking.API.ProjectByPMService;
 import com.example.effortmanagement.networking.API.RoleService;
 import com.example.effortmanagement.networking.API.TaskCreService;
@@ -31,7 +33,9 @@ public class NetworkingUtils {
     private static TaskUpdateService taskUpdateService;
     private static EmployeeTaskListService employeeTaskListService;
     private static EmployeeTaskDetailService employeeTaskDetailService;
-    public static EmployeeUpdateEffortService employeeUpdateEffortService;
+    private static EmployeeUpdateEffortService employeeUpdateEffortService;
+    private static NotificationDetailService notificationDetailService;
+    private static ApproveEffortService approveEffortService;
 
 
     public static AccountService getUserApiInstance() {
@@ -126,5 +130,17 @@ public class NetworkingUtils {
             employeeUpdateEffortService = RetrofitAdapter.getInstance().create(EmployeeUpdateEffortService.class);
         }
         return employeeUpdateEffortService;
+    }
+    public static NotificationDetailService getNotificationDetailApiInstance(){
+        if (notificationDetailService == null){
+            notificationDetailService = RetrofitAdapter.getInstance().create(NotificationDetailService.class);
+        }
+        return notificationDetailService;
+    }
+    public static ApproveEffortService getApproveEffortApiInstance(){
+        if (approveEffortService == null){
+            approveEffortService = RetrofitAdapter.getInstance().create(ApproveEffortService.class);
+        }
+        return approveEffortService;
     }
 }
