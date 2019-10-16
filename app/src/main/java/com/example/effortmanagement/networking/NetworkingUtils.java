@@ -4,6 +4,9 @@ import com.example.effortmanagement.adapter.RetrofitAdapter;
 import com.example.effortmanagement.networking.API.AccountInfoService;
 import com.example.effortmanagement.networking.API.AccountService;
 import com.example.effortmanagement.networking.API.EmployeeProService;
+import com.example.effortmanagement.networking.API.EmployeeTaskDetailService;
+import com.example.effortmanagement.networking.API.EmployeeTaskListService;
+import com.example.effortmanagement.networking.API.EmployeeUpdateEffortService;
 import com.example.effortmanagement.networking.API.ProjectByPMService;
 import com.example.effortmanagement.networking.API.RoleService;
 import com.example.effortmanagement.networking.API.TaskCreService;
@@ -12,6 +15,7 @@ import com.example.effortmanagement.networking.API.TaskEmpEffortService;
 import com.example.effortmanagement.networking.API.TaskInfoService;
 import com.example.effortmanagement.networking.API.TaskService;
 import com.example.effortmanagement.networking.API.TaskUpdateService;
+import com.example.effortmanagement.presenter.TaskUpdatePresenter;
 
 public class NetworkingUtils {
     private static AccountService accountService;
@@ -25,6 +29,10 @@ public class NetworkingUtils {
     private static TaskEmpEffortService taskEmpEffortService;
     private static TaskInfoService taskInfoService;
     private static TaskUpdateService taskUpdateService;
+    private static EmployeeTaskListService employeeTaskListService;
+    private static EmployeeTaskDetailService employeeTaskDetailService;
+    public static EmployeeUpdateEffortService employeeUpdateEffortService;
+
 
     public static AccountService getUserApiInstance() {
         if (accountService == null)
@@ -99,5 +107,24 @@ public class NetworkingUtils {
         }
         return taskUpdateService;
     }
+    public static EmployeeTaskListService getListTaskOfEmployeeByAccountNameInstance(){
+        if (employeeTaskListService == null){
+            employeeTaskListService = RetrofitAdapter.getInstance().create(EmployeeTaskListService.class);
+        }
+        return employeeTaskListService;
+    }
 
+    public static EmployeeTaskDetailService getInfoOfTaskByTaskIdInstance(){
+        if (employeeTaskDetailService == null){
+            employeeTaskDetailService = RetrofitAdapter.getInstance().create(EmployeeTaskDetailService.class);
+        }
+        return employeeTaskDetailService;
+    }
+
+    public static EmployeeUpdateEffortService updateEffortInstance(){
+        if (employeeUpdateEffortService == null){
+            employeeUpdateEffortService = RetrofitAdapter.getInstance().create(EmployeeUpdateEffortService.class);
+        }
+        return employeeUpdateEffortService;
+    }
 }

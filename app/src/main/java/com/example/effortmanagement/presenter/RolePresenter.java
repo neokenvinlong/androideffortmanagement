@@ -1,15 +1,9 @@
 package com.example.effortmanagement.presenter;
 
-import android.content.Intent;
-import android.widget.Toast;
-
 import com.example.effortmanagement.contract.RoleContract;
 import com.example.effortmanagement.model.dto.LoginRoleAccountDTO;
 import com.example.effortmanagement.networking.API.RoleService;
 import com.example.effortmanagement.networking.NetworkingUtils;
-import com.example.effortmanagement.view.EmployeeActivity;
-import com.example.effortmanagement.view.LoginActivity;
-import com.example.effortmanagement.view.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
