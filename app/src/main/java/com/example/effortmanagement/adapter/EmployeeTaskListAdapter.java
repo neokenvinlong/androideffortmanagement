@@ -10,33 +10,38 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.effortmanagement.R;
-import com.example.effortmanagement.model.dto.EmployeeTaskListItem;
+import com.example.effortmanagement.model.dto.EmployeeTaskListDTO;
 
 import java.util.List;
 
 public class EmployeeTaskListAdapter extends RecyclerView.Adapter<EmployeeTaskListAdapter.EmployeeTaskListViewHolder> {
 
     Context eContext;
-    List<EmployeeTaskListItem> eData;
+    List<EmployeeTaskListDTO> eData;
+    private OnTaskListener mOnTaskListener;
+   // public static int task_id;
 
-    public EmployeeTaskListAdapter(Context eContext, List<EmployeeTaskListItem> eData) {
+    public EmployeeTaskListAdapter(Context eContext, List<EmployeeTaskListDTO> eData, OnTaskListener onTaskListener) {
         this.eContext = eContext;
         this.eData = eData;
+        this.mOnTaskListener = onTaskListener;
     }
 
     @Override
     public EmployeeTaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layout;
         layout = LayoutInflater.from(eContext).inflate(R.layout.item_employee_task, parent, false);
-        return new EmployeeTaskListViewHolder(layout);
+        return new EmployeeTaskListViewHolder(layout, mOnTaskListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmployeeTaskListViewHolder holder, int position) {
-        holder.taskName.setText(eData.get(position).getTaskName());
+        holder.taskName.setText(eData.get(position).getTitle());
         holder.status.setText(eData.get(position).getStatus());
-        holder.effort.setText(eData.get(position).getEffot() + "");
+        holder.calendar_effort.setText(eData.get(position).getCalendar_effort() + "");
 
+//        task_id = eData.get(position).getTask_id();
+//        holder.task_id.setText(task_id + "");
     }
 
     @Override
@@ -44,17 +49,32 @@ public class EmployeeTaskListAdapter extends RecyclerView.Adapter<EmployeeTaskLi
         return eData.size();
     }
 
-    public class EmployeeTaskListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView taskName, status, effort;
+    public class EmployeeTaskListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public EmployeeTaskListViewHolder(@NonNull View itemView) {
+        TextView taskName, status, calendar_effort;// task_id;
+        OnTaskListener onTaskListener;
+
+        public EmployeeTaskListViewHolder(@NonNull View itemView, OnTaskListener onTaskListener) {
             super(itemView);
 
             taskName = itemView.findViewById(R.id.txtEmployeeTaskName);
             status = itemView.findViewById(R.id.txtEmployeeStatus);
-            effort = itemView.findViewById(R.id.txtEmployeeEffort);
+            calendar_effort = itemView.findViewById(R.id.txtEmployeeEffort);
+          //  task_id = itemView.findViewById(R.id.txtTaskID1);
+            this.onTaskListener = onTaskListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            onTaskListener.onTaskClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnTaskListener{
+        void onTaskClick(int position);
     }
 
 }

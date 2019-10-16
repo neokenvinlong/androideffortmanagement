@@ -156,7 +156,7 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
 
     private void doSomething(int employeeID1){
         employeeID = employeeID1;
-        Toast.makeText(this, employeeID+ " success", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, employeeID+ " success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -173,7 +173,7 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
         for(int i = 0; i < listDTO.size(); i++){
             if(empID == listDTO.get(i).getEmployeeID()){
                 empName = listDTO.get(i).getEmployeeName();
-                System.out.println("aaa"+empName);
+//                System.out.println("aaa"+empName);
                 spinEmployee.setSelection(getIndex(spinEmployee,empName));
                 break;
             }
@@ -212,14 +212,14 @@ public class ViewTaskActivity extends AppCompatActivity implements TaskInfoContr
                 int calendarEffort = Integer.valueOf(edtCalendarEffort.getText().toString());
                 taskCreate = new TaskCreDTO(taskID,title,desc,statusResult,date,calendarEffort,projectID,employeeID);
 
-                System.out.println("update tra ve la"+taskCreate.getTaskId());
-                System.out.println("update tra ve la"+taskCreate.getTitle());
-                System.out.println("update tra ve la"+taskCreate.getDescription());
-                System.out.println("update tra ve la"+taskCreate.getStatus());
-                System.out.println("update tra ve la"+taskCreate.getEndDate());
-                System.out.println("update tra ve la"+taskCreate.getCalendarEffort());
-                System.out.println("update tra ve la"+taskCreate.getProjectId());
-                System.out.println("update tra ve la"+taskCreate.getEmployeeId());
+//                System.out.println("update tra ve la"+taskCreate.getTaskId());
+//                System.out.println("update tra ve la"+taskCreate.getTitle());
+//                System.out.println("update tra ve la"+taskCreate.getDescription());
+//                System.out.println("update tra ve la"+taskCreate.getStatus());
+//                System.out.println("update tra ve la"+taskCreate.getEndDate());
+//                System.out.println("update tra ve la"+taskCreate.getCalendarEffort());
+//                System.out.println("update tra ve la"+taskCreate.getProjectId());
+//                System.out.println("update tra ve la"+taskCreate.getEmployeeId());
 
                 if(checkUpdate(title,calendarEffort)){
                     taskUpdatePresenter.getTaskUpdate(taskCreate, tokens);

@@ -214,7 +214,7 @@ public class TaskListFragment extends Fragment implements ProjectInfoContract.Vi
     @Override
     public void getAccountInfoSuccess(AccountInfoDTO accountInfoDTO) {
         employeeID = accountInfoDTO.getId();
-        System.out.println("id la"+employeeID);
+        //System.out.println("id la"+employeeID);
         this.projectInfoPresenter.getProjectInfo(employeeID,token);
     }
 
